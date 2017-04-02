@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ML Club</title>
+    <title>Randomness</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -17,11 +17,25 @@
     <!-- Theme CSS -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
 
+    <script src="bower_components/jQuery-SlotMachine/dist/jquery.slotmachine.min.js"></script>
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    
+    <script src="js/jquery-min.js"></script>
+    <script src="js/d3-min.js"></script>
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+    </script>
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,8 +43,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="js/jquery-min.js"></script>
-
 
 </head>
 
@@ -45,7 +57,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                <a class="navbar-brand" href="index.html">Jaley Dholakiya</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,7 +70,7 @@
                         <a href="about.html">About</a>
                     </li>
                     <li>
-                        <a href="post.html">Sample Post</a>
+                        <a href="randomness.html">Randomness</a>
                     </li>
                     <li>
                         <a href="contact.html">Contact</a>
@@ -72,48 +84,33 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>Crazy Muse</h1>
-                        <hr class="small">
-                        <span class="subheading">ML Related Visualizations</span>
+                    <div class="post-heading">
+                        <h1>Topic Modelling</h1>
+                        <h2 class="subheading">Uncovering the underlying Structure</h2>
+                        <span class="meta">Posted by <a href="#">Jaley Dholakiya</a> on Mar 31, 2017</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                    <a href="randomness.html">
-                        <h2 class="post-title">
-                            The Riddling Randomess
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Superbasic Intro to Probability
-                        </h3>
-                    </a>
-                    <a href="topicmodel.html">
-                        <h2 class="post-title">
-                            Topic Modelling
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Seperating the topics
-                        </h3>
-                    </a>
+    <!-- Post Content -->
+    <article>
+        <div class="contentainer">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p align="justify">
+                    Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can't I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example 'Novak Djokovic' retiring comes under Sports section and 'Hillary vs Trump' comes under politics section.
+                    </p>
 
-                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p>
                 </div>
-                <hr>
             </div>
         </div>
-    </div>
+    </article>
 
     <hr>
 
@@ -148,7 +145,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                    <!--p class="copyright text-muted">Copyright &copy; Your Website 2016</p-->
                 </div>
             </div>
         </div>
@@ -166,6 +163,7 @@
 
     <!-- Theme JavaScript -->
     <script src="js/clean-blog.min.js"></script>
+    <script src="js/vis/blog1.js"></script>
 
 </body>
 
