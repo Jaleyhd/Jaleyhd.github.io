@@ -129,9 +129,33 @@
                     $$p(n_1,n-n1)=\cfrac{\Gamma(n+1)}{\Gamma(n_1+1)\Gamma(n-n_1+1)}p_1^{n_1} p_2^{n-n_1}$$
                     or simplifying it further it becomes
                     $$p((n_1)_H)= ^nC_{n_1} p_1^{n_1} p_2^{n-n_1}$$
-
-
+                    Here $p((n_1)_H)$ is nothing but probability of getting $n_1$ heads out of n trials.
                     </p>
+                    <h2 class="subheading">Gambler's Dilemma</h2>
+                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
+                        Its friday night at L.A. and Ace Rothstien is eyeing to win a game of coins by 80% chances of winning. Now the rules of game are that out of 3 coin tosses, if you get 3 heads (all heads), then you win. Ace has a lot of money to bet on. Hence he decides to swiftly replace the coins in casino and replace them with biased coins. These coins are sligtly heavy on one side, but the thing is that Ace doesn't want to take any chances. He makes sure that he has 80% chances of winning, not more, not less. Do you think he will get arrested? 
+                    </div>
+                    <p align="justify">
+                    In the above problem, we are looking at modelling the probability of coin toss so as to win the game of coins. You need to sink in here, that we are not interested in finding the probability of finding 3 heads out of 5 coin tosses rather we are interested in changing the bias of the coin such that probability of 3 heads out of 5 coins is a particular number. This is called Beta Distribution.
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px">
+                                <b>Binomial Distribution</b> <br/>
+                                $$ P({(n_1)}_H,{(n_2)}_T) = \cfrac{\Gamma(n_1+n_2+1)}{\Gamma(n_1+1)\Gamma(n_2+1)}p^{n_1}(1-p)^{n_2} $$
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px">
+                                <b>Beta Distribution</b> <br/>
+                                $$ P(x;[\alpha,\beta]) = \cfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1} $$
+
+                           </div>
+
+                        </div>
+                    </div> 
+                    <p align="justify">
+                    Do you find anything common in the above equations describing Binomial and Beta Distribution ? Try to substitue $(\alpha,\beta)=(n_1+1,n_2+1)$ It will become almost look like Binomial Distribution. The only difference, if you observe is the constant multiplicative factor and that the p is replaced with x.
+                    This is becaue we are now considering probability(x) as variable, while $(n_1,n_2) or number of heads as fixed.
+                    </p>                  
                 </div>
             </div>
         </div>
