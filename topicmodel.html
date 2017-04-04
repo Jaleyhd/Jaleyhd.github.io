@@ -70,9 +70,6 @@
                         <a href="about.html">About</a>
                     </li>
                     <li>
-                        <a href="randomness.html">Randomness</a>
-                    </li>
-                    <li>
                         <a href="contact.html">Contact</a>
                     </li>
                 </ul>
@@ -142,7 +139,7 @@
                         <div class="row">
                             <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px">
                                 <b>Binomial Distribution</b> <br/>
-                                $$ P({(n_1)}_H,{(n_2)}_T) = \cfrac{\Gamma(n_1+n_2+1)}{\Gamma(n_1+1)\Gamma(n_2+1)}p^{n_1}(1-p)^{n_2} $$
+                                $$ P({(n_1)}_H,{(n_2)}_T) = \cfrac{\Gamma(n_1+n_2+1)}{\Gamma(n_1+1)\Gamma(n_2+1)}p_H^{n_1}(1-p_H)^{n_2} $$
                             </div>
                              <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px">
                                 <b>Beta Distribution</b> <br/>
@@ -154,9 +151,10 @@
                     </div> 
                     <p align="justify">
                     Do you find anything common in the above equations describing Binomial and Beta Distribution ? Try to substitue $(\alpha,\beta)=(n_1+1,n_2+1)$ It will become almost look like Binomial Distribution. The only difference, if you observe is the constant multiplicative factor and that the p is replaced with x.
-                    This is becaue we are now considering probability(x) as variable, while $(n_1,n_2) or number of heads as fixed.
+                    This is becaue we are now considering probability(x) as variable, while $(n_1,n_2)$ or number of heads as fixed.
                     </p>                  
                 </div>
+
             </div>
         </div>
     </article>
