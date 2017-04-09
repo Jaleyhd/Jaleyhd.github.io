@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Randomness</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script src="js/jquery-min.js"></script>
+    <script src="js/d3-min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+    </script>
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Jaley Dholakiya</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Sampling Algorithms</h1>
+                        <h2 class="subheading">Key to Distribution's heart</h2>
+                        <span class="meta">Posted by <a href="#">Jaley Dholakiya</a> on Mar 31, 2017</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="contentainer">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p align="justify">
+                    <b>Statutory Warning : </b> <i>This is highly mathematical blog, hence only people have some familiarity with probability and Expectation should read it. Otherwise it can be a living nightmare</i>
+                    </p>
+                    <p align="justify">
+                        In this blog, we are going to uncover ways of estimating a distribution via Sampling. This is "very" important blog for practical implementation of various ML Algorithms. We will start of with a short story about Monte Carlo 
+                    </p>
+                    <h2 class="subheading">Monte Carlo Approximation</h2>
+                    <p align="justify">
+                        <h3>Coin Tossing</h3>
+                        What is the easiest way to find out the bias in coin ? in other words, whats $P(H)$? Think for a while . . . 
+                    </p>
+                    <p align="justify">
+                        Simply toss the coin thousand times, and find the number of times head came divided by 1000. Thats it! Thats <b>Monte Carlo</b> for you guys. Here we are drawing 1000 random values from same coin tossing event. These 1000 values can be considered as one possible outcome of 1000 random variables which are drawn from the distribution. Its like  drawing $(X_1,X_2,\cdots X_{1000})$  from $P$ or probability distribution where $X_i$ is random variable.so $(x_1,x_2,\cdots x_{1000})$ is one possibe outcome of drawing, something like $(H,T,\cdots T)$.
+                    </p>
+                    <div style="background-color:#ddeeee;padding:24px;margin: 21px;color: #666666">
+                        <b>Mathematical Definition of Monte-Carlo Approximation</b><br/>
+                        <p align="justify">
+                        If you draw N random numbers $(X_1,X_2,\cdots X_{N})$  from a probability distribution $P$ which are IID's(Independent and Identically distributed ), then the bellow equation holds true.
+                        $$\lim_{N\rightarrow \infty} ||E(f(X))-\frac{1}{N}\sum\limits_{i=0}^Nf(X_i)|| = 0 $$                        
+                        </p>
+                        <b>Mathematical Definition of Monte-Carlo Integration</b><br/>
+                        If $X_1,X_2,\cdots$ are sampled from a distribution $P$, then we can approximate  integratation of a function over such distribution as shown bellow :  
+                        $$\int_Xf(X)p(x)dx \approx \frac{1}{N}\sum_{i=0}^{N}f(X_i)$$
+                    </div>
+                    <p align="justify">
+                    The goal in the above equation is to estimate $E(f(X))$ for some function f. Now computing expectation is super easy for simple random variable like binomial with 2 trials $(P=Bin(2))$. If you do it monte-carlo way, you will throw a pair of coins 100's of times and estimate function for each of the outcome and average it out. If you do the same by standard approch, it looks something like this :   $$E(f(X))=\frac{1}{3}\Big( P(\#H=0)f(0)+P(\#H=1)f(1)+P(\#H=2)f(2) \Big)$$ But let us say, if we have 10 dice throwing experiment. Can you tell me the number of points where we have to estimate value of f? It has to be on $6^{10}$ points or 60,466,176 points. In other words estimating function on a probability space becomes more and more difficult when X is of higher dimension and/or has large number of possible outcomes. This is the main reason why monte-carlo based methods are needed, where we sample a lot of random variables from Distribution($X_i \sim Bin(3)$) and get average estimation of its value.
+                    </p>
+                    <h2 class="subheading">Importance Sampling</h2>
+                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
+                        <b>Limitations of Monte Carlo</b><br/>
+                        <p align="justify">
+                        Let us consider a case where my functions is defined as bellow where $X \sim \mathcal{N}(\mu =0,\,\sigma ^{2}=1) $: 
+                                $$ 
+                                f(x) =
+                                \left\{
+                                    \begin{array}{ll}
+                                        0  & \mbox{if } x < 3 \\
+                                        1 & \mbox{if } x > 3 
+                                    \end{array}
+                                \right. \hspace{2 cm} 
+                                p(x) = \cfrac{1}{\sqrt{2\pi}}e^{-\cfrac{x^2}{2}}
+                                 $$
+                        Do you see anything strange in the above case? The regions where the pdf(probability density function) of the domain is high, you can see that the function's value is 0, and conversely, the regions where the function's value is high, the pdf is close to 0. Now if you try do monte carlo estimation using 100 points, its definitely gonna give you not so correct answer. You may need to conduct the experiment, 10000 times to get good enough estimate. But isn't it tedious? There will come a point, where you will start wondering, if there is a better way to get the expectation. Because I can't always generate soo many samples for estimation. Thats what a lot of mathematicians thought and we now have Importance Sampling.
+                        </p>
+                    </div>
+                    <p align="justify">
+                    <i>"If only, we could have more samples where the function's value is high."</i> What if we could sample from some other distribution? Thats exactly what lead to Importance sampling where we sample from some other distribution, where the function's value is high for substantial fraction of samples. Let us say, this new distribution is $q(x)$. It is generally chosen to be wide in varience, so that it overlaps with regions where the function is high and also with the regions where the function is not high. It is best to cover regions where the $p(x)$ was also dense.(which is around 0).
+                    </p>
+                    <p align="justify">
+                    Hence we choose a fake distribution, $q(x)$ as $\mathcal{N}(\mu =1,\,\sigma ^{2}=4) $ instead of $p(x)$ which is $\mathcal{N}(\mu =0,\,\sigma ^{2}=1) $. This distribution is called fake, because that's not how actual distribution of samples are. Now comes the important part, as we are not sampling from p(x), we will have to weight each sample differently. Intuitively, weightage of points after 3 should be less because they are very less probable in actual distribution. This weightage is called importance weight.
+                    </p>
+                    <p align="justify">
+                    Hold on to what you have read in the previous paragraph, because now we are going to find out the importance weight mathematically. A quick recap of difference between standard way and monte carlo way of estimation is essential before we proceed.
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px;margin-bottom: 35px;height: 180px">
+                                <b>Exact Solution (Continuous)</b> <br/>
+                                $$ E(f(X))=\int_{-\infty}^{\infty}  f(x)p(x)dx$$
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px;margin-bottom: 35px;height: 180px">
+                                <b>Monte Carlo Approximation (Continuous)</b> <br/>
+                                $$ E(f(X))=\frac{1}{N}\sum_{i=1}^{N}f(X_i)$$
+                                <div id="tester"></div>
+                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px;margin-bottom: 35px;height: 180px">
+                                <b>Exact Solution (Discrete)</b> <br/>
+                                $$ E(f(X))=\sum\limits_{x=-\infty}^{\infty}  f(x)p(x) $$
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px;margin-bottom: 35px;height: 180px">
+                                <b>Monte Carlo Approximation (Discrete)</b> <br/>
+                                $$ E(f(X))=\frac{1}{N}\sum_{i=1}^{N}f(X_i)$$
+                                <div id="tester"></div>
+                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px;margin-bottom: 35px;height: 250px">
+                                <b>Exact Solution (Continuous)</b> <br/>
+                                $$ E(f(X))=\int_{-\infty}^{\infty}  \overbrace{\left(f(x)\frac{p(x)}{q(x)}\right)}^{\mbox{new function}}q(x)dx$$
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px;margin-bottom: 35px;height: 250px">
+                                <b>Importance Sampling (Continuous)</b> <br/>
+                                $$ E(f(X))=\frac{1}{N}\sum_{i=1}^{N}f(X_i)*\overbrace{\frac{p(X_i)}{q(X_i)}}^{\mbox{imp w's}}$$
+                                where $X_i \sim \mathcal{N}(\mu=1,\sigma^2=4) $ a.k.a $q(X)$
+                                <div id="tester"></div>
+                           </div>
+                        </div>
+                    </div> 
+                    <p align="justify">If you observe the bottom-right block of equation, you will observe that $X_i$ are sampled from $q(X)$. Which means a lot of them will fall beyond 3 mark. But thier contribution will be weighted(suppressed) by importance weight or ($p(X_i)/q(X_i)$). So it is called Importance sampling because we are not sampling according to actual distribution (p(X)) , rather we are sampling according to q(X) and then making up for the distortion by multiplying the function value by importance weight(p/q).</p>
+                    <p align="justify">
+                    In terms of variance, you will observe that the variance of the newly sampled points will be lesser the previously sampled variance.
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5" style="background-color: #eeeedd;padding: 5px;margin-right: 35px;margin-bottom: 35px;">
+                                <b>Old Variance</b> <br/>
+                                <!-- $$ Var(f(X))=\int_{-\infty}^{\infty}  [f(x)-E(f(X))]^2p(x)dx$$ -->
+                                $Var(f(X))$ via Monte-Carlo Sampling : $1.3\times10^{-5}$
+                            </div>
+                             <div class="col-md-6" style="background-color: #eeeedd;padding: 5px;margin-left: 35px;margin-bottom: 35px;">
+                                <b>New Variance </b> <br/>
+                                <!-- $$ Var(f(X))=\int_{-\infty}^{\infty}  \left[f(x)\cfrac{p(x)}{q(x)}-E\left(f(X)\cfrac{p(X)}{q(X)}\right)\right]^2q(x)dx$$ -->
+                                $Var(f(X))$ via Importance Sampling : $9.5\times10^{-8}$
+                           </div>
+                        </div>
+                    </div>
+                <p align="justify">The above variance is calculated by taking 1000 samples of 100 size, and for each you find out the mean. Now you find out the Variance based on variation in the expected value of sample(calculated for each 100 size sample) from actual exepected value of the function over the domain. This is calcuated for 1000 expected values obtained for each sample.</p>
+                <h2 class="subheading">Inverse Transform Sampling a.k.a Smirnov Tranform</h2>
+                <p align="justify"> Let us say, we conducted an experiment on longitivity of 1500 mosquitoes, and found out that 500 die within (1/100)th of a day. Another 500 die between (1/100)th and (1/10)th of the day. Remaining 500 die within the remaining period. Now the thing, I want to generate a random number with such probability for simulation experiments. The problem is that I have only uniform density generator available. How do I generate such distribution? Think about it for a while.</p>
+
+                <h2 class="subheading">Rejection Sampling</h2>
+                <p align="justify"></p>
+                <h2 class="subheading">Sneak peak into Bayesian Inference</h2>
+                <p align="justify">
+                    Lets say you see you little brother enter your house totally drenched in water. You want to know use Bayesian Inference to determine if there was actually any rain. In this scenario, you want to find the probability of raining outside given that your brother is wet. This is also called posterior in ML Terms. </p>
+                    <p align="justify">
+                    Any thing post the observed event (whose probability are generally provided), "post condition=wetness/ post apocalypse" which can be possible cause to it, can be termed as posterior event, and its probability can be termed as <b>posterior probability</b>. <b>Likelihood Probability, </b>P(wet|rain) is  possibility(probability) of event to be a cause the apocalype/wetness.In another cryptic way I can say , "Suppose causal event(rain or bucket) occurs, whats probability of causation to lead to to the actual event". Its like P(smoke|volcano) is 0.98, which means lets suppose volcano is cause of smoke, then probabity of eruption translating to smoke is 0.98.</p>
+                    <p align="justify"> It can also be seen as turning the posterior upside down in terms of conditional probability. In our example, P(rain|wet) is posterior, P(wet|rain), P(wet|bucket from top) is likelihood, and P(rain) is prior. <b>Prior probability</b> is nothing but information about independent probability of the conditional we are evaluating. So in posterior, if you remove the pre-condition(P(rain|<strike>wet</strike>)), it becomes, prior probability i.e P(rain).
+                    </p>
+                    <p align="justify">
+                     The last but not the least, is the normalizing denominator or <b>partition function</b>. It is P(wet) which is broken down(partioned) into all possible sample events and their priors. Here it is P(wet|rain)*P(rain)+P(wet|bucket)*P(bucket)+P(wet|rest)*P(rest). Please Note that here, the causes of "wetness" are partioned by possible prior events(which could have lead to "wetness"). This  includes (rain,bucket,rest).Note that P(rain)+P(bucket)+P(rest)=1 also holds true.
+                     $$\overbrace{P(rain|wet)}^{posterior} = \cfrac{\overbrace{P(rain)}^{prior}*\overbrace{P(wet|rain)}^{likelihood}}{\underbrace{P(wet)}_{partition}}$$
+                     Also partition function can be broken into priors of causal events and thier likelihoods.
+                     $$\overbrace{P(wet)}^{partition}=\underbrace{\overbrace{P(rain)}^{prior(E1)}\overbrace{P(wet|rain)}^{likelihood(E1)}}_{\text{if suspected cause is rain}}+\underbrace{\overbrace{P(bucket)}^{prior(E2)}\overbrace{P(wet|bucket)}^{likelihood(E2)}}_{\text{if suspected cause is bucket}}+\underbrace{\overbrace{P(rest)}^{prior(E3)}\overbrace{P(wet|rest)}^{likelihood(E3)}}_{\text{if suspected cause is unknown}}$$
+                </p>
+                    <div style="background-color:#ddeeee;padding:24px;margin: 21px;color: #666666">
+                        <b>Mathematical Definition</b><br/>
+                        Let X be an event which can be caused by $Y\in\left\{Y_1,Y_2 \cdots Y_N\right\}$ causes. Here each $Y_i$ is a possible cause for X. Then, probability that "$Y_*$ caused X" is given by bellow equation : 
+                        <p align="justify">
+                        $$P(Y_*|X) = \cfrac{P(Y_*)*P(X|Y_*)}{\sum\limits_{i=0}^{N}P(X|Y_i)*P(Y_i)}$$
+                        In continuous domain, it can be written as bellow : 
+                        $$P(Y_*|X) = \cfrac{P(Y_*)*P(X|Y_*)}{\int\limits_{\theta =-\infty}^{\infty} P(X|Y_{\theta})*P(Y_{\theta })dY_{\theta }}$$
+                        </p>
+                    </div>
+
+
+                <h3>References</h3>
+                <i><a htref="http://astrostatistics.psu.edu/su14/lectures/cisewski_is.pdf">1. Importance Sampling, Jessi Cisewski, CMU, June 2014</a></i><br/>
+                <i><a href="https://www.youtube.com/user/mathematicalmonk">2. Mathematical Monk Youtube channel, Lecture 17-18</a></i><br/>
+                <i><a href="https://www.datascience.com/blog/introduction-to-bayesian-inference-learn-data-science-tutorials">3. Aaron Kramer, Introduction to Bayesian Inference</a></i>
+                </div>
+
+
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--p class="copyright text-muted">Copyright &copy; Your Website 2016</p-->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+    <script src="js/vis/blog1.js"></script>
+
+</body>
+
+</html>
