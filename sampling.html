@@ -9,7 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Randomness</title>
+    <title>Sampling</title>
+        <style type="text/css">
+            tab0 { padding-right: 1em;}
+            dummydeclaration { padding-left: 4em; } /* Firefox ignores first declaration for some reason */
+            tab1 { padding-left: 2em; }
+            tab2 { padding-left: 8em; }
+            tab3 { padding-left: 12em; }
+
+        </style>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -238,29 +246,39 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12" style="background-color: #eeeedd;padding: 5px;margin-right: 35px;margin-bottom: 35px;">
-                                <b>Algorithm for rejection sampling</b> <br/>
+                                <h3>Algorithm for rejection sampling</h3>
                                 <!-- $$ Var(f(X))=\int_{-\infty}^{\infty}  [f(x)-E(f(X))]^2p(x)dx$$ -->
                                 <i>
-                                    <b>1. </b>Sample a random value u from $\mathcal{U}(0,1)$. <br/>
-                                    <b>2. </b>Sample a random value $x_1$ from $g(x)$. <br/>
-                                    <b>3. </b>for i in 1:N<br/>
-                                    <b>4. </b>    <b>if</b> $u*g(x_i)\leq p(x)$ <br/>
-                                    <b>5. </b>    <b>then</b> accept $x_i$ <br/>
-                                    <b>6. </b>    <b>else</b> reject $x_i$ <br/>
-                                    <b>7. </b>    Sample u,$x_{i+1}$ from $\mathcal{U}(0,1)$ and $g(x)$ respectively <br/>
+                                    <b><tab0><small>1.</small></tab0></b>Sample a random value u from  $\mathcal{U}(0,1)$. <br/>
+                                    <b><tab0><small>2.</small></tab0></b>Sample a random value $x_1$ from $g(x)$. <br/>
+                                    <b><tab0><small>3.</small></tab0></b><b>for</b> i in 1:N<br/>
+                                    <b><tab0><small>4.</small></tab0></b><tab1><b>if</b> $u*g(x_i)\leq p(x)$ <br/></tab1>
+                                    <b><tab0><small>5.</small></tab0></b><tab1><b>then</b> accept $x_i$ <br/></tab1>
+                                    <b><tab0><small>6.</small></tab0></b><tab1><b>else</b> reject $x_i$ <br/></tab1>
+                                    <b><tab0><small>7.</small></tab0></b><tab1>Sample u, $x_{i+1}$ from $\mathcal{U}(0,1)$ and $g(x)$ respectively <br/></tab1>
 
 
                                 </i>
                             </div>
                         </div>
                     </div>                
-                <p align="justify"> Note that g(x) is <b>NOT</b> a pdf, rather a <i>scaled</i> pdf(prob.density.func). It is scaled in such a way that $\forall x\in \mathcal{D}p(x)$, $\min\limits_{k} kg_{N}(x) \geq f(x)$ where $g_{N}(x)$ is actual pdf(i.e normalized). In other words g(x) is always greater than or equal to p(x) in its domain, and touches it at atleast one point.</p>
-                <p align="justify"></p>
-
-                <p align="justify"></p>
+                <p align="justify"> Note that g(x) is <b>NOT</b> a pdf, rather a <i>scaled</i> pdf(prob.density.func). It is scaled in such a way that $\forall x\in \mathcal{D}p(x)$, $\min\limits_{k} kg_{N}(x) \geq p(x)$ where $g_{N}(x)$ is actual pdf(i.e normalized). In other words g(x) is always greater than or equal to p(x) in its domain, and touches it at atleast one point.</p>
+                <p align="justify">Why does this stratagy work? For that I will ask you a bunch of questions and answer will lead us to a greater understanding</p>
+                <p align="justify">
+                    
+                    <tab0><b>Q.</b></tab0>What is the probabilty by with we are sampling x ? <br/>
+                    <tab0><b>A.</b></tab0>$g_N(x)$<br/><br/>
+                    <tab0><b>Q.</b></tab0>What is the probabilty of a particular $x$,i.e $x_*$ getting accepted after selection <br/>
+                    <tab0><b>A.</b></tab0>$p(x_*)/g(x_*)$<br/><br/>
+                    <tab0><b>Q.</b></tab0>What is the overall probabilty of x getting selected in general? In other words, What is the probability distribution of x? <br/>
+                    <tab0><b>A.</b></tab0>$Normalized(g_N(x)*p(x)/g(x))=\frac{p(x)/k}{\int (p(x)/k) dx}=\cfrac{p(x)/k}{1/k}=p(x)$<br/>
+                </p>
+                <p align="justify">If you think about the questions, the intuition behind the stratagy will be right in front of you. Simply speaking, we are selecting an x from distribution of $g_N(x)$ and then accepting it with probability $p(x)/g(x)$. That means in some way, we are generating samples from distribution of p(x)</p>
+                <p align="justify"> Use discretion in selecting g(x). If it's shape is too much different from p(x), then a lot of samples will be rejected. Fraction of total rejections = Area of region between f(x) and g(x) divided by total area of g(x).
+                </p>
                 <h2 class="subheading">Sneak peak into Bayesian Inference</h2>
                 <p align="justify">
-                    Lets say you see you little brother enter your house totally drenched in water. You want to know use Bayesian Inference to determine if there was actually any rain. In this scenario, you want to find the probability of raining outside given that your brother is wet. This is also called posterior in ML Terms. </p>
+                    Lets say you see you little brother enter your house totally drenched in water. You want to use Bayesian Inference to determine if there was actually any rain. In this scenario, you want to find the probability of raining outside given that your brother is wet. This is also called posterior in ML Terms. </p>
                     <p align="justify">
                     Any thing post the observed event (whose probability are generally provided), "post condition=wetness/ post apocalypse" which can be possible cause to it, can be termed as posterior event, and its probability can be termed as <b>posterior probability</b>. <b>Likelihood Probability, </b>P(wet|rain) is  possibility(probability) of event to be a cause the apocalype/wetness.In another cryptic way I can say , "Suppose causal event(rain or bucket) occurs, whats probability of causation to lead to to the actual event". Its like P(smoke|volcano) is 0.98, which means lets suppose volcano is cause of smoke, then probabity of eruption translating to smoke is 0.98.</p>
                     <p align="justify"> It can also be seen as turning the posterior upside down in terms of conditional probability. In our example, P(rain|wet) is posterior, P(wet|rain), P(wet|bucket from top) is likelihood, and P(rain) is prior. <b>Prior probability</b> is nothing but information about independent probability of the conditional we are evaluating. So in posterior, if you remove the pre-condition(P(rain|<strike>wet</strike>)), it becomes, prior probability i.e P(rain).
