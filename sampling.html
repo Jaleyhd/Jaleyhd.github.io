@@ -211,9 +211,52 @@
                     </div>
                 <p align="justify">The above variance is calculated by taking 1000 samples of 100 size, and for each you find out the mean. Now you find out the Variance based on variation in the expected value of sample(calculated for each 100 size sample) from actual exepected value of the function over the domain. This is calcuated for 1000 expected values obtained for each sample.</p>
                 <h2 class="subheading">Inverse Transform Sampling a.k.a Smirnov Tranform</h2>
-                <p align="justify"> Let us say, we conducted an experiment on longitivity of 1500 mosquitoes, and found out that 500 die within (1/100)th of a day. Another 500 die between (1/100)th and (1/10)th of the day. Remaining 500 die within the remaining period. Now the thing, I want to generate a random number with such probability for simulation experiments. The problem is that I have only uniform density generator available. How do I generate such distribution? Think about it for a while.</p>
+                <p align="justify"> Let us say, we conducted an experiment on longitivity of 1500 mosquitoes, and found out that 500 die within (1/100)th of a day. Another 500 die between (1/100)th and (1/10)th of the day. Remaining 500 die in rest of the period. Now the thing, I want to generate a random number with such probability for simulation experiments. The problem is that I have only uniform density generator available. How do I generate such distribution? Think about it for a while.</p>
+                <h3><i>A meter's rod solves it all</i></h3>
+                <p align="justify"> 
+                    While thinking about solution for generating such distribution, I ended up going to my garage, where I saw  my dad doing his daily car cleaning chores of the day.I asked him this burning question that I was having. He being mechenical engineer is wired to think in physical terms. So he took out the 1 meter rod  and marker from the inventory box. He then marked 33 cm mark in the meter rod as $(1/100)^{th}$ and  66 cm mark as $(1/10)^{th}$. Now he told me as follow : <br/><br/>
+                    <i><b>Dad : </b> Ask your uniform random number generator to spit out some numbers between 0 and 1 </i> <br/>
+                    <i><b>Me  : </b> Ok pops, it says 0.2,0.5,0.9 </i> <br/>
+                    <i><b>Dad : </b> Wa, Wa, Wait, Slow down</i> <br/>
+                </p>
+                <p align="justify"> He now used a chalk to write seperate set of markings in the right of the scale, which is uniformly increasing from 0 to 0.01 untill it reaches 33 cm mark on scale, then it uniformly increases from 0.01 to 0.1 untill it reaches 66 cm mark, again it keeps increasing from 0.1 to 1 untill it hits 1 meter mark. He told this named this new scale as Mosquito Scale. He asked me to note down the numbers coming mosquito scale against the numbers which are spited out by random number generator and queried by the meter scale. In short output is mosquito scale, input in meter scale. Thats it!, bazinga, I had my mosquite life simulator!!!</p>
+                <p align="justify"> In short, my dad discovered Smirnov sampling in his own mechenical way. Lets look at what has he done here in a more mathematical definition. Before we bunge into definition, have look at the intuition. </p> 
+                <h3>Intuition</h3>
+                    <p align="justify">
+                    <i>What is more probable should get more space</i><br/>
+                    If you are showing ads to a TV user, and each ad has some probability of generating revenue. The revenue it gives should be proportional to time allocated for that ad. Thats classic smirnov problem for you guys. Its like stretching out more probable(of generating revenue) ads, and shrinking out less probable ones. So that now they are all equally probable. It is like going towards uniform distribution, by stretching/shrinking down more and less probables to get it all flat. Think for a while, cause its super-important concept and a visualization. What if I say, that it seems like Inverse? Because we are flattening out the probabilities? Moving from $CDF[0,1]$ to $U[0,1]$. Well thats the intuition for you readers. 
+                    In Mosquito case, we need to give 33.33% bandwidth for [0,0.01] as its probability is 1/3. Similarly next 33% bandwidth for interval [0.01,0.1] pushing us to 66% mark and remaining 33% for [0.1,1]. That sounds familiar, cause its cumulative probability distribution which we are evening out. In the process of evening the range out, the domain gets transformed and becomes the CDF range points. Range becoming domain is nothing but inverse of CDF, and thats exactly what Smirnov Transform is.
+                    </p>
+                <div style="background-color:#ddeeee;padding:24px;margin: 21px;color: #666666">
+                    <b>Mathematical Definition</b><br/>
+
+                </div>
 
                 <h2 class="subheading">Rejection Sampling</h2>
+                <p align="justify"> Rejection Sampling - name says it all. Its kind of sampling where we reject samples, based on some strategy.This kind of sampling in very useful, if you don't know the exact distribution  or it is very difficult to compute, but know approximate shape of the distribution(or can find another distribution closely enveloping it). But lets consider simplest example for rejection sampling.</p>
+                <p align="justify"> Let p(x)=$\mathcal{N}(0,1)$(Normal distr) be the pdf(probability density function) of interest. We first find out rectangle kg(x) which boxes it down. Such rectangle spans from -6 to 6 and has height $1/\sqrt{2\pi}$. Here $k = 12/\sqrt{2\pi}$ which gets multiplied with $\mathcal{U}(-6,6)$(uniform distr) with height $1/12$. Now here is the stratagy </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12" style="background-color: #eeeedd;padding: 5px;margin-right: 35px;margin-bottom: 35px;">
+                                <b>Algorithm for rejection sampling</b> <br/>
+                                <!-- $$ Var(f(X))=\int_{-\infty}^{\infty}  [f(x)-E(f(X))]^2p(x)dx$$ -->
+                                <i>
+                                    <b>1. </b>Sample a random value u from $\mathcal{U}(0,1)$. <br/>
+                                    <b>2. </b>Sample a random value $x_1$ from $g(x)$. <br/>
+                                    <b>3. </b>for i in 1:N<br/>
+                                    <b>4. </b>    <b>if</b> $u*g(x_i)\leq p(x)$ <br/>
+                                    <b>5. </b>    <b>then</b> accept $x_i$ <br/>
+                                    <b>6. </b>    <b>else</b> reject $x_i$ <br/>
+                                    <b>7. </b>    Sample u,$x_{i+1}$ from $\mathcal{U}(0,1)$ and $g(x)$ respectively <br/>
+
+
+                                </i>
+                            </div>
+                        </div>
+                    </div>                
+                <p align="justify"> Note that g(x) is <b>NOT</b> a pdf, rather a <i>scaled</i> pdf(prob.density.func). It is scaled in such a way that $\forall x\in \mathcal{D}p(x)$, $\min\limits_{k} kg_{N}(x) \geq f(x)$ where $g_{N}(x)$ is actual pdf(i.e normalized). In other words g(x) is always greater than or equal to p(x) in its domain, and touches it at atleast one point.</p>
+                <p align="justify"></p>
+
                 <p align="justify"></p>
                 <h2 class="subheading">Sneak peak into Bayesian Inference</h2>
                 <p align="justify">
