@@ -299,11 +299,54 @@
                         </p>
                     </div>
 
+                    <h2>From Independent Trials to Markov Chain</h2>
+                    <p align="justify">
+                    Let us say you are given two tasks. First is to toss a coin, and the second is to roll a dice. Do you think, that outcomes of coin will affect outcomes of dice ? No, right! Thats why we call such events independent. But lets say you are given a jar of toffees. It contains strawberry flavored and  dark chocolate flavored toffee. But unlike coin and dice, where one outcome is independent of the other outcome, we have 90% tendency to select the other flavored toffee. Which means events are not independent. I will not want to eat same toffee two times in a row. To model such an event, we require understanding of sequence.</p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-right: 35px;margin-bottom: 35px">
+                                <b>Example 1</b> <br/>
+                                <img src="img/statespace.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
+                                <tab0><b>1.</b></tab0>P(stay in same state) = 0.1<br/>
+                                <tab0><b>2.</b></tab0>P(change to next state) = 0.9<br/>
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px;margin-bottom: 35px">
+                                <b>Example 2</b> <br/>
+                                <img src="img/statespace2.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
+                                <tab0><b>1.</b></tab0>P(stay in same state) = 0.9<br/>
+                                <tab0><b>2.</b></tab0>P(change to next state) = 0.1<br/>
+
+                           </div>
+                        </div>
+                    </div> 
+
+                    <h3>Markovian Property and Conditional Independence</h3>
+                    Let us consider 5 events as shown in the figure, where A depends on B, B depends on C,D,E. Now, Markovian property states that $P(A|B,C,D,E)$ is $P(A|B)$. It means A is conditionally independent of C,D,E given that we know $P(A|B)$. In a simple linear chain of events, happening sequencially, it states that future sequence is independent of past sequence, provided we know present event.
+                    <img src="img/conditionalIndependence.png" class="img-responsive center-block" style='height: 100%; width: 30%; object-fit: contain' />
+                    <h2> MCMC aka Markov Chain Monte Carlo </h2>
+                    We studied in the previous section how we try to estimate the bayesian by applying bayes theoram. But it can be pretty tedious because of the bellow reasons.<br/>
+                    <tab0><b>1.</b></tab0>Partition Function is too difficult to estimate <br/>
+                    <tab0><b>2.</b></tab0>Joint Likelihood is difficult to replicate.(same problem as in importance sampling)<br/><br/>
+                    <div style="background-color:#ddeeee;padding:24px;margin: 21px;color: #666666">
+                    <h3>Motivation for MCMC</h3>
+                    Imagine a football ground and I need to estimate the distribution of wet regions in field. Now, comparing to large football field, the probability of wet regions is very less. If you use traditional monte carlo distribution estimation, it will fail miserably, because there are very high chances that the monte carlo samples do not fall into the wet regions. But what about Importance sampling? Even that will fail miserably because choice of the fake/auxillary distribution which we use for sampling can be cumborsome. So what is the sollution? The solution lies in MCMC.<br/>
+                    The idea for MCMC is that start from a random sample and keep moving untill you find region of reasonably good probability. You can visualize it as climbing a hill. Now you have a choice, either you can accept a new sample around the hilltop and probably towards another hilltop, or reject it. This is because, we have a vague idea that wet regions are connected in some ways. In mathematical sense, we become oblivious/ ignorant of the vast regions of insignificant probability and only concentrate on the caravan of high probability regions which are loosely connected. So we move in form of a markov chain (a chain of samples), always deciding about going ahead or staying back(reject the new sample) based on a <b>deciding factor</b>. Now the intuition is that such group of samples will best describe the distribution.<br/>
+                    Do note that unlike importance or rejection sampling you don't need any specific distribution to start off with.
+                    </div>
+                    <img src="img/MCRobot.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
+                    <h3>Simple Case - Gaussian Prior, Gaussian Likelihood, Gaussian Posterior </h3>
+
+
+
+
+
+
 
                 <h3>References</h3>
                 <i><a htref="http://astrostatistics.psu.edu/su14/lectures/cisewski_is.pdf">1. Importance Sampling, Jessi Cisewski, CMU, June 2014</a></i><br/>
                 <i><a href="https://www.youtube.com/user/mathematicalmonk">2. Mathematical Monk Youtube channel, Lecture 17-18</a></i><br/>
                 <i><a href="https://www.datascience.com/blog/introduction-to-bayesian-inference-learn-data-science-tutorials">3. Aaron Kramer, Introduction to Bayesian Inference</a></i>
+                 <i><a href="http://carrot.mcb.uconn.edu/~olgazh/bioinf2010/">4. MCMC Blue Hilltop image is taken from MCRobot Course Material</a></i>               
                 </div>
 
 
