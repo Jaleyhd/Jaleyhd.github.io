@@ -157,6 +157,7 @@
                     <p align="justify">
                     <i>"If only, we could have more samples where the function's value is high."</i> What if we could sample from some other distribution? Thats exactly what lead to Importance sampling where we sample from some other distribution, where the function's value is high for substantial fraction of samples. Let us say, this new distribution is $q(x)$. It is generally chosen to be wide in varience, so that it overlaps with regions where the function is high and also with the regions where the function is not high. It is best to cover regions where the $p(x)$ was also dense.(which is around 0).
                     </p>
+                    <img src="img/importanceSampling.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />                    
                     <p align="justify">
                     Hence we choose a fake distribution, $q(x)$ as $\mathcal{N}(\mu =1,\,\sigma ^{2}=4) $ instead of $p(x)$ which is $\mathcal{N}(\mu =0,\,\sigma ^{2}=1) $. This distribution is called fake, because that's not how actual distribution of samples are. Now comes the important part, as we are not sampling from p(x), we will have to weight each sample differently. Intuitively, weightage of points after 3 should be less because they are very less probable in actual distribution. This weightage is called importance weight.
                     </p>
@@ -227,6 +228,7 @@
                     <i><b>Me  : </b> Ok pops, it says 0.2,0.5,0.9 </i> <br/>
                     <i><b>Dad : </b> Wa, Wa, Wait, Slow down</i> <br/>
                 </p>
+                <img src="img/mosquitoscale.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
                 <p align="justify"> He now used a chalk to write seperate set of markings in the right of the scale, which is uniformly increasing from 0 to 0.01 untill it reaches 33 cm mark on scale, then it uniformly increases from 0.01 to 0.1 untill it reaches 66 cm mark, again it keeps increasing from 0.1 to 1 untill it hits 1 meter mark. He told this named this new scale as Mosquito Scale. He asked me to note down the numbers coming mosquito scale against the numbers which are spited out by random number generator and queried by the meter scale. In short output is mosquito scale, input in meter scale. Thats it!, bazinga, I had my mosquite life simulator!!!</p>
                 <p align="justify"> In short, my dad discovered Smirnov sampling in his own mechenical way. Lets look at what has he done here in a more mathematical definition. Before we bunge into definition, have look at the intuition. </p> 
                 <h3>Intuition</h3>
@@ -243,6 +245,7 @@
                 <h2 class="subheading">Rejection Sampling</h2>
                 <p align="justify"> Rejection Sampling - name says it all. Its kind of sampling where we reject samples, based on some strategy.This kind of sampling in very useful, if you don't know the exact distribution  or it is very difficult to compute, but know approximate shape of the distribution(or can find another distribution closely enveloping it). But lets consider simplest example for rejection sampling.</p>
                 <p align="justify"> Let p(x)=$\mathcal{N}(0,1)$(Normal distr) be the pdf(probability density function) of interest. We first find out rectangle kg(x) which boxes it down. Such rectangle spans from -6 to 6 and has height $1/\sqrt{2\pi}$. Here $k = 12/\sqrt{2\pi}$ which gets multiplied with $\mathcal{U}(-6,6)$(uniform distr) with height $1/12$. Now here is the stratagy </p>
+                <img src="img/rejectionsampling.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12" style="background-color: #eeeedd;padding: 5px;margin-right: 35px;margin-bottom: 35px;">
@@ -264,6 +267,7 @@
                     </div>                
                 <p align="justify"> Note that g(x) is <b>NOT</b> a pdf, rather a <i>scaled</i> pdf(prob.density.func). It is scaled in such a way that $\forall x\in \mathcal{D}p(x)$, $\min\limits_{k} kg_{N}(x) \geq p(x)$ where $g_{N}(x)$ is actual pdf(i.e normalized). In other words g(x) is always greater than or equal to p(x) in its domain, and touches it at atleast one point.</p>
                 <p align="justify">Why does this stratagy work? For that I will ask you a bunch of questions and answer will lead us to a greater understanding</p>
+
                 <p align="justify">
                     
                     <tab0><b>Q.</b></tab0>What is the probabilty by with we are sampling x ? <br/>
@@ -273,6 +277,7 @@
                     <tab0><b>Q.</b></tab0>What is the overall probabilty of x getting selected in general? In other words, What is the probability distribution of x? <br/>
                     <tab0><b>A.</b></tab0>$Normalized(g_N(x)*p(x)/g(x))=\frac{p(x)/k}{\int (p(x)/k) dx}=\cfrac{p(x)/k}{1/k}=p(x)$<br/>
                 </p>
+
                 <p align="justify">If you think about the questions, the intuition behind the stratagy will be right in front of you. Simply speaking, we are selecting an x from distribution of $g_N(x)$ and then accepting it with probability $p(x)/g(x)$. That means in some way, we are generating samples from distribution of p(x)</p>
                 <p align="justify"> Use discretion in selecting g(x). If it's shape is too much different from p(x), then a lot of samples will be rejected. Fraction of total rejections = Area of region between f(x) and g(x) divided by total area of g(x).
                 </p>
@@ -282,7 +287,7 @@
                     <p align="justify">
                     Any thing post the observed event (whose probability are generally provided), "post condition=wetness/ post apocalypse" which can be possible cause to it, can be termed as posterior event, and its probability can be termed as <b>posterior probability</b>. <b>Likelihood Probability, </b>P(wet|rain) is  possibility(probability) of event to be a cause the apocalype/wetness.In another cryptic way I can say , "Suppose causal event(rain or bucket) occurs, whats probability of causation to lead to to the actual event". Its like P(smoke|volcano) is 0.98, which means lets suppose volcano is cause of smoke, then probabity of eruption translating to smoke is 0.98.</p>
                     <p align="justify"> It can also be seen as turning the posterior upside down in terms of conditional probability. In our example, P(rain|wet) is posterior, P(wet|rain), P(wet|bucket from top) is likelihood, and P(rain) is prior. <b>Prior probability</b> is nothing but information about independent probability of the conditional we are evaluating. So in posterior, if you remove the pre-condition(P(rain|<strike>wet</strike>)), it becomes, prior probability i.e P(rain).
-                    </p>
+                    </p>                    
                     <p align="justify">
                      The last but not the least, is the normalizing denominator or <b>partition function</b>. It is P(wet) which is broken down(partioned) into all possible sample events and their priors. Here it is P(wet|rain)*P(rain)+P(wet|bucket)*P(bucket)+P(wet|rest)*P(rest). Please Note that here, the causes of "wetness" are partioned by possible prior events(which could have lead to "wetness"). This  includes (rain,bucket,rest).Note that P(rain)+P(bucket)+P(rest)=1 also holds true.
                      $$\overbrace{P(rain|wet)}^{posterior} = \cfrac{\overbrace{P(rain)}^{prior}*\overbrace{P(wet|rain)}^{likelihood}}{\underbrace{P(wet)}_{partition}}$$
@@ -298,19 +303,46 @@
                         $$P(Y_*|X) = \cfrac{P(Y_*)*P(X|Y_*)}{\int\limits_{\theta =-\infty}^{\infty} P(X|Y_{\theta})*P(Y_{\theta })dY_{\theta }}$$
                         </p>
                     </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" >
+                                <b>Example based Venn Diagram</b> <br/><br/>
+                                <img src="img/venndiagram.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
+                                <br/><br/>
+                                <tab0><b>Posterior</b></tab0>$P(rain|wet)$<br/>
+                                <tab0><b>Likelihood</b></tab0>$P(wet|rain)$<br/>
+                                <tab0><b>Partition Function</b></tab0>$P(wet)$<br/>
+                                <tab0><b>Expanded Partition </b></tab0>$\sum\limits_{t}P(wet|t)P(t)$<br/>
+                                <tab0><b>Partition Params(t)</b></tab0>$rain$,$bucket$,$rest$<br/>
+
+                            </div>
+                             <div class="col-md-6">
+                                <b>Generallized Venn Diagram</b> <br/><br/>
+                                <img src="img/venndiagram2.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
+                                <br/><br/><br/>
+                                <tab0><b>Posterior</b></tab0>$P(t_1|x)$<br/>
+                                <tab0><b>Likelihood</b></tab0>$P(x|t_1)$<br/>
+                                <tab0><b>Partition Function</b></tab0>$P(x)$<br/>
+                                <tab0><b>Expanded Partition </b></tab0>$\sum\limits_{t}P(x|t)P(t)$<br/>
+                                <tab0><b>Partition Params(t)</b></tab0>$t_1$,$t_2$,$t_3$<br/>
+
+                           </div>
+                        </div>
+                    </div> 
+
 
                     <h2>From Independent Trials to Markov Chain</h2>
                     <p align="justify">
                     Let us say you are given two tasks. First is to toss a coin, and the second is to roll a dice. Do you think, that outcomes of coin will affect outcomes of dice ? No, right! Thats why we call such events independent. But lets say you are given a jar of toffees. It contains strawberry flavored and  dark chocolate flavored toffee. But unlike coin and dice, where one outcome is independent of the other outcome, we have 90% tendency to select the other flavored toffee. Which means events are not independent. I will not want to eat same toffee two times in a row. To model such an event, we require understanding of sequence.</p>
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-right: 35px;margin-bottom: 35px">
+                            <div class="col-md-5" style="padding: 25px;margin-right: 35px;margin-bottom: 35px">
                                 <b>Example 1</b> <br/>
                                 <img src="img/statespace.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
                                 <tab0><b>1.</b></tab0>P(stay in same state) = 0.1<br/>
                                 <tab0><b>2.</b></tab0>P(change to next state) = 0.9<br/>
                             </div>
-                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px;margin-bottom: 35px">
+                             <div class="col-md-5" style="padding: 25px;margin-left: 35px;margin-bottom: 35px">
                                 <b>Example 2</b> <br/>
                                 <img src="img/statespace2.png" class="img-rounded" style='height: 100%; width: 100%; object-fit: contain' />
                                 <tab0><b>1.</b></tab0>P(stay in same state) = 0.9<br/>
