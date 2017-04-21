@@ -329,6 +329,19 @@
                            </div>
                         </div>
                     </div> 
+                    <h3>Practical Bayesian Estimate</h3>
+                    All this philosophical explainations of rain and bucket are of NO use, if you don't understand how bayesian estimates are used by datascientists in day-to-day work.<br/>
+                    Let us say, I know the distribution of data ($x$) is normal(gaussian). I just want to know the mean ($\mu$) of this distribution given the data points. Our big assumption is that only mean of the best fitting distribution is to be known, varience is already known/fixed.
+                    Now how would you find it out? You can very easily say that $E(x)$ is the best value to be assigned to $\mu$ parameter. But here is the twist. Lets say you know the prior distribution of the data from internet, and you need to somehow take this into account. How will you do that? Create a grid of possible $mu$ values. For each $\mu$ value, i.e $\mu_i$, Find out the value of term $Prior(\mu_i)*Likelihood(x|\mu_i)$ for each $\mu_i$ where x is nothing but 100 data points and $Likelihood(x|\mu_i)$ is given by 
+                    
+                    $$Likelihood(x|\mu_i)=\prod\limits_{i=0}^{99} Likelihood(x_i|\mu_i)$$
+
+                    Note, $Prior(\mu_i)$ is nothing but probability of parameters, which is nothing but mean here. So $Prior(x=\mu_i)$ will give probability of distribution's mean having certain value. It emits a number telling probability of having such mean(parameter) in the first place irrespective of likelihood. If we have to check posterior(without partion) for $\mu=0.3$ and x=[0,0.5,2], I have to evaluate $Prior(0.3)*Likelihood(x|\mu=0.3)$. Assume $Prior\sim \mathcal{N}(0,1)$ and Likelihood to be $\mathcal{N}(\mu_i,2)$. For these distributions, the handpicked $\mu_i=0.3$ (one point from mesh grid of all possible $\mu$'s) ,our posterior will be proportional to 
+                    $$\underbrace{Posterior(\mu_i=0.3|x)}_{shittynumber} \propto \underbrace{g_{(0,1)}(0.3)}_{prior}.\underbrace{g_{(0.3,2)}(0).g_{(0.3,2)}(0.5).g_{(0.3,2)}(2)}_{likelihood}$$
+                    <br/>
+                    Note that here $$g_{(\mu,\sigma)}(x)=\cfrac{1}{\sqrt{2\pi\sigma^2}}e^{\cfrac{-(x-\mu)^2}{2\sigma^2}}$$. Now we evaluate the above expression to get this 'shitty number' for other points of grid(apart from 0.3), ie $\mu_i\in[-1,-0.99\cdots 0.99,1]$. We then select the shittiest parameter i.e $\underset{\mu_i}{\arg \max}shittynumber$. It means that over that grid, the selected $\mu_i=\mu_*$ gives highest value of $\propto Posterior(\mu_*|x)$. And thankfully, the proportionality constant is same for all the points in the grid which is nothing but $\cfrac{1}{Partition(x)}$. Hence we discount its hefty calculation, getting rid of all the difficulties in evaluating partition function.
+                    <br/>
+                    To summarize, we are trying to estimate a parameter, given that we know its prior distribution. Had we not known prior distribution, we could have simply considered $E(x)$ or to be accurate, $\underset{\mu_i}{\arg \max}\prod\limits_{j=0}^{N-1} g_{(\mu_i,2)}(x_j)$. But now because of prior, we find out the $\mu_i$ resulting in highest $prior*posterior$ value.
 
 
                     <h2>From Independent Trials to Markov Chain</h2>
@@ -367,8 +380,9 @@
                     </div>
                     <img src="img/MCRobot.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
                     <h3>Simple Case - Gaussian Prior, Gaussian Likelihood, Gaussian Posterior </h3>
-
-
+                    <p align="justify">
+                    Let us consider 
+                    </p>
 
 
 
