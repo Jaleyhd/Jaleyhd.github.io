@@ -13,15 +13,14 @@ fenced_code_blocks:  true
 permalink:           pretty
 
 # Setup
-title:            Computing Thoughts
-tagline:          Bruce Eckel's Programming Blog
+title:            Invisible Shackles
+tagline:          Thoughts on oxymorones in life
 url:              http://bruceeckel.github.io/
 paginate:            5
 baseurl:          /
 
 # About/contact
 author:
-  name:           Bruce Eckel
-  url:            http://www.mindviewinc.com
-  email:          mindviewinc@gmail.com
-
+  name:           Jaley Dholakiya
+  url:            www.github.com/Jaleyhd
+  email:          -
