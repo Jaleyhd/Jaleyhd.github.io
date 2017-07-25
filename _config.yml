@@ -1,4 +1,4 @@
-timezone: America/Denver
+timezone: Asia/Calcutta
 # Dependencies
 markdown:       kramdown
 redcarpet:
@@ -15,7 +15,7 @@ permalink:           pretty
 # Setup
 title:            Invisible Shackles
 tagline:          Thoughts on oxymorones in life
-url:              http://jaleyhd.github.io/
+url:              jaleyhd.github.io
 paginate:            5
 baseurl:          /
 
