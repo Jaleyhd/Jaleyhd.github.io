@@ -15,12 +15,12 @@ permalink:           pretty
 # Setup
 title:            Invisible Shackles
 tagline:          Thoughts on oxymorones in life
-url:              jaleyhd.github.io
+url:              http://jaleyhd.github.io
 paginate:            5
 baseurl:          /
 
 # About/contact
 author:
   name:           Jaley Dholakiya
-  url:            www.github.com/Jaleyhd
-  email:          -
+  url:            http://jaleyhd.github.io
+  email:          jaley.dholakiya@gmail.com
