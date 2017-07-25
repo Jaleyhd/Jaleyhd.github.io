@@ -1,7 +1,7 @@
 ---
 layout: post
 published: true
-title: Intro
+title: A tangy sip of Oxymorons
 ---
 
 ## Superawesome Blogging template ##
