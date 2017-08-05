@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Randomness</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <script src="js/jquery-min.js"></script>
+    <script src="js/d3-min.js"></script>
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+    </script>
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Jaley Dholakiya</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>The Riddling Randomness</h1>
+                        <h2 class="subheading">It all begin with randomness</h2>
+                        <span class="meta">Posted by <a href="#">Jaley Dholakiya</a> on Mar 31, 2017</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="contentainer">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p align="justify">
+                        Any discussion on Machine Learning or AI, is seemingly incomplete without comprehending randomness. The randomness inherent in nature has always dazzled and inspired us, to come up with mathematical models which comprehends its behavior. Be it AlphaGo, or be it Self Driving Cars, the succour of all that is learnt and what is yet to be learnt lies in bedrock of Random numbers. Be it bayesian Inference, or Monte-carlo based approaches, or Deep Learning, or Reinforcement Learning, it is boils down to how good your understanding of random numbers is. 
+                    </p>
+
+                    <h2 class="section-heading">What's Random number? </h2>
+
+                    <p align="justify">You know Integers right? Now when I talk about certain events like days in a week, or wheels in a car, etc we use integers or Real/Complex Number to describe it. But lets say, I want to know the probability that you will end up reading this whole blog. Then it is definitely a random number. Randomness is the shadow of uncertainity, and random number is a way of representing it. Each random number has a probability associated with the possible Events.</p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">                    
+                                <div id="visprobdistr"></div>
+                            </div>
+                            <div class="col-md-9">                    
+                                <div id="vistossevent"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p align="justify">
+                     Pick up any probability book and blog, you will find coin tossing example. Now you are not that dumb, that you can't figure out why outcomes of coin are uncertain/probabilistic. What you need to understand is three facets of probability space. These are as bellow :</p>
+                    <b>Sample Space ($\omega$)</b> : <i>All Outcomes</i>
+                    <p align="justify">
+                        Sample Space is nothing but you writing down all possible outcomes. In this case only head and tail are part of $\omega$. If you were throwing two dice together, there will be $6 \times 6 = 36$ outcomes possible. 
+                    </p>
+                    <b>Event ($ \pmb{ \mathbf{ \mathbb{F}}} $)</b> : <i>What is the probability of getting "_____" ?></i>
+                    <p align="justify">
+                    If you replace "_____" with "even numbers" in a dice. Than that is one such event. Event is nothing but a subset of sample space. Hence  outcomes of an event $\subseteq    $ elements in sample space.
+                    </p>
+                    <b>Probability ($  \mathit{P}$ )</b> : <i>What is the <b>probability</b> of getting a head ?</i>
+                    <p align="justify">
+                    Probability is a number between 0 and 1 which tells you chances of an event.$$\mathit{P} : \pmb{\mathbf{\mathbb{F} \rightarrow }} \left[0,1 \right] $$
+                    If outcomes of an event becomes same as sample space, then probability of such event is "___". Any guesses? Its 1. 
+                    </p>
+                    <h2 class="section-heading">Bernoulli and Binomial Distributions</h2>
+                <i>Old wine in a new bottle</i>
+                    <p align="justify">
+                    First of all, what the hell is distribution? Above all these new terms? Lets go one by one. If you can break the event in an ordered sequence , such that there is <b>no overlap</b> between the outcomes of such events. Then such a  mapping of events with its probability gives you probability distribution if each outcome of such events have one to one mapping with elements in sample space. <i>In simple words we are mapping all possible outcomes with their respective probability.</i>
+                    </p>
+                    <p align="justify">
+                    For example, Lets say we are tossing 2 coins together instead of 1. In this case the sample space is $\left\{ 2_T,1_H1_T,2_H\right\}$ where "H" stands for head and "T" stands for tail.
+                    </p>
+                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
+                    <h3>Sleepbusters</h3>
+                    <p align="justify">
+                        - Are all outcomes in this new space equaly probable? i.e probabilty of 1 head = probability of 0 head? <br/>
+                        - Why are the outcomes equaly probable for single tossing experiment?<br/>
+                        - Are $1_H1_T$ and $1_T1_H$ different events in case of simultaneous tossing of two coins?<br/>
+                        - If 50 coins are tossed together, do you see some insight as to why betting on 25 heads is best option. Would you go for betting in such scenario or run away?
+                    </p>
+                    </div>
+                    <p align="justify">
+                    If we have only single coin tossing experiment. Then distribution for such experiment is called <b><i>Bernoulli Distribution</i></b>. If we have "n" coins tossed together, then we call the distribution as <b><i>Binomial Distribution</i></b>
+                    </p>                    
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-right: 35px"> 
+                            <b>Bernoulli Distribution</b>
+
+                                $$ P(x) =
+                                \left\{
+                                    \begin{array}{ll}
+                                        1/2  & \mbox{if } x = 1_T \\
+                                        1/2 & \mbox{if } x = 1_H
+                                    \end{array}
+                                \right. $$
+                                <br/>
+                            </div>
+                            <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px">
+                            <b>Binomial Distribution</b>                            
+                                $$ P(x) =
+                                \left\{
+                                    \begin{array}{ll}
+                                        1/4  & \mbox{if } x = 2_T \\
+                                        2/4 & \mbox{if } x = 1_H1_T\\
+                                        1/4 & \mbox{if } x = 2_H\\
+                                    \end{array}
+                                \right. $$
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--p class="copyright text-muted">Copyright &copy; Your Website 2016</p-->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+    <script src="js/vis/blog1.js"></script>
+
+</body>
+
+</html>

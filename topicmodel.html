@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Randomness</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script src="js/jquery-min.js"></script>
+    <script src="js/d3-min.js"></script>
+
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+    </script>
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Jaley Dholakiya</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Topic Modelling</h1>
+                        <h2 class="subheading">Uncovering the underlying Structure</h2>
+                        <span class="meta">Posted by <a href="#">Jaley Dholakiya</a> on Mar 31, 2017</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="contentainer">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p align="justify">
+                    Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can't I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example 'Novak Djokovic' retiring comes under Sports section and 'Hillary vs Trump' comes under politics section.
+                    </p>
+                    <p align="justify">
+                    Before we dive into details of topic modelling, let us have a look at a few topics in probability. If we skip these topics, you will only know how to use topic modelling, but will miss out on the wisdom and beauty behind the curtains.
+                    </p>
+                    <h2 class="subheading">Categorical Distribution</h2>
+                    <p align="justify"> Before reading this blog, make sure you understand Binomial Distribution. You can also refer to my previous blogs for the same. If you recall, <b>bi</b>nomial distribution was cascade of 'n' events, with each event having two outcomes possible. Hence multiple coin tossing example fits into the explaination of Binomial Distribution. But what if each event could have multiple outcomes? For example in dice you have 6 possible outcomes. Such distribution is  considered to be a part of <b>Catagori</b>cal Distribution.
+                    </p>
+                    <p align="justify">
+                    Let us look at some spooky mathematical equations, to describe this distribution. In case you feel sweating, you should know that its normal. Instead of finding probability of 3 heads out of 5 tosses, we will find probability of 2 ones,2 twos,1 six out of 5 dice rolls. You can see that the problem has become complicated(if you say so), because we need to consider count of multiple categories in the overall cascade of events unlike binomial where only 1 category of head was being observed(i.e 1 head of 5 tosses, 2 head of 5 tosses, etc).
+                    </p>
+                    <p align="justify">
+                    Can you tell me how many dimensions will be required to plot categorical distribution? Answer would be right in front of you, if you have understood the previous para.
+                    </p>
+                    <p align="justify">
+                    Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :
+                    $$\sum\limits_{i=0}^{i=m}n_i=n$$
+                    $$\sum\limits_{i=0}^{i=m}p_i=1$$
+                    This joint probability (which is our objective) is given by equation bellow :
+                    $$p(n_1,n_2,\cdots c_m)=\cfrac{\Gamma(n_1+n_2 + \cdots n_m+1)}{\Gamma(n_1+1)\Gamma(n_2+1)\cdots \Gamma(n_m+1)}p_1^{n_1} p_2^{n_2} \cdots p_m^{n_m}$$
+                    where $\Gamma(n)=(n-1)!$ or in other words  $\Gamma(n)=(n-1)(n-2)\cdots 1$.
+                    Wait a second. Does this equation look familiar? I know its too long, but doesn't it remind of some other equation ? Well . . . you guessed it right. It looks very similar to binomial distribution. If there are only two catagories. Here head occurs n1 times and tail occurs n-n1 times The equation becomes
+                    $$p(n_1,n-n1)=\cfrac{\Gamma(n+1)}{\Gamma(n_1+1)\Gamma(n-n_1+1)}p_1^{n_1} p_2^{n-n_1}$$
+                    or simplifying it further it becomes
+                    $$p((n_1)_H)= ^nC_{n_1} p_1^{n_1} p_2^{n-n_1}$$
+                    Here $p((n_1)_H)$ is nothing but probability of getting $n_1$ heads out of n trials.
+                    </p>
+                    <h2 class="subheading">Gambler's Dilemma</h2>
+                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
+                        Its friday night at L.A. and Ace Rothstien is eyeing to win a game of coins by 80% chances of winning. Now the rules of game are that out of 3 coin tosses, if you get 3 heads (all heads), then you win. Ace has a lot of money to bet on. Hence he decides to swiftly replace the coins in casino and replace them with biased coins. These coins are sligtly heavy on one side, but the thing is that Ace doesn't want to take any chances. He makes sure that he has 80% chances of winning, not more, not less. Do you think he will get arrested? 
+                    </div>
+                    <p align="justify">
+                    In the above problem, we are looking at modelling the probability of coin toss so as to win the game of coins. You need to sink in here, that we are not interested in finding the probability of finding 3 heads out of 5 coin tosses rather we are interested in changing the bias of the coin such that probability of 3 heads out of 5 coins is a particular number. This is called Beta Distribution.
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px">
+                                <b>Binomial Distribution</b> <br/>
+                                $$ P({(n_1)}_H,{(n_2)}_T) = \cfrac{\Gamma(n_1+n_2+1)}{\Gamma(n_1+1)\Gamma(n_2+1)}p_H^{n_1}(1-p_H)^{n_2} $$
+                            </div>
+                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px">
+                                <b>Beta Distribution</b> <br/>
+                                $$ P(x;[\alpha,\beta]) = \cfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1} $$
+
+                           </div>
+
+                        </div>
+                    </div> 
+                    <p align="justify">
+                    Do you find anything common in the above equations describing Binomial and Beta Distribution ? Try to substitue $(\alpha,\beta)=(n_1+1,n_2+1)$ It will become almost look like Binomial Distribution. The only difference, if you observe is the constant multiplicative factor and that the p is replaced with x.
+                    This is becaue we are now considering probability(x) as variable, while $(n_1,n_2)$ or number of heads as fixed.
+                    </p>                  
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--p class="copyright text-muted">Copyright &copy; Your Website 2016</p-->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+    <script src="js/vis/blog1.js"></script>
+
+</body>
+
+</html>
