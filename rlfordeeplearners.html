@@ -10,7 +10,9 @@
     <meta name="author" content="">
 
     <title>Randomness</title>
-
+	<link rel="stylesheet" href="styles/monokai-sublime.css">
+	<script src="highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -101,82 +103,227 @@
         <div class="contentainer">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p align="justify">
-                    Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can't I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example 'Novak Djokovic' retiring comes under Sports section and 'Hillary vs Trump' comes under politics section.
-                    </p>
-                    <p align="justify">
-                    Before we dive into details of topic modelling, let us have a look at a few topics in probability. If we skip these topics, you will only know how to use topic modelling, but will miss out on the wisdom and beauty behind the curtains.
-                    </p>
-                    <h2 class="subheading">Categorical Distribution</h2>
-                    <p align="justify"> Before reading this blog, make sure you understand Binomial Distribution. You can also refer to my previous blogs for the same. If you recall, <b>bi</b>nomial distribution was cascade of 'n' events, with each event having two outcomes possible. Hence multiple coin tossing example fits into the explaination of Binomial Distribution. But what if each event could have multiple outcomes? For example in dice you have 6 possible outcomes. Such distribution is  considered to be a part of <b>Catagori</b>cal Distribution.
-                    </p>
-                    <p align="justify">
-                    Let us look at some spooky mathematical equations, to describe this distribution. In case you feel sweating, you should know that its normal. Instead of finding probability of 3 heads out of 5 tosses, we will find probability of 2 ones,2 twos,1 six out of 5 dice rolls. You can see that the problem has become complicated(if you say so), because we need to consider count of multiple categories in the overall cascade of events unlike binomial where only 1 category of head was being observed(i.e 1 head of 5 tosses, 2 head of 5 tosses, etc).
-                    </p>
-                    <p align="justify">
-                    Can you tell me how many dimensions will be required to plot categorical distribution? Answer would be right in front of you, if you have understood the previous para.
-                    </p>
-                    <p align="justify">
-                    Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :
-                    $$\sum\limits_{i=0}^{i=m}n_i=n$$
-                    $$\sum\limits_{i=0}^{i=m}p_i=1$$
-                    This joint probability (which is our objective) is given by equation bellow :
-                    $$p(n_1,n_2,\cdots c_m)=\cfrac{\Gamma(n_1+n_2 + \cdots n_m+1)}{\Gamma(n_1+1)\Gamma(n_2+1)\cdots \Gamma(n_m+1)}p_1^{n_1} p_2^{n_2} \cdots p_m^{n_m}$$
-                    where $\Gamma(n)=(n-1)!$ or in other words  $\Gamma(n)=(n-1)(n-2)\cdots 1$.
-                    Wait a second. Does this equation look familiar? I know its too long, but doesn't it remind of some other equation ? Well . . . you guessed it right. It looks very similar to binomial distribution. If there are only two catagories. Here head occurs n1 times and tail occurs n-n1 times The equation becomes
-                    $$p(n_1,n-n1)=\cfrac{\Gamma(n+1)}{\Gamma(n_1+1)\Gamma(n-n_1+1)}p_1^{n_1} p_2^{n-n_1}$$
-                    or simplifying it further it becomes
-                    $$p((n_1)_H)= ^nC_{n_1} p_1^{n_1} p_2^{n-n_1}$$
-                    Here $p((n_1)_H)$ is nothing but probability of getting $n_1$ heads out of n trials.
-                    </p>
-                    <h2 class="subheading">Gambler's Dilemma</h2>
-                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
-                        Its friday night at L.A. and Ace Rothstien is eyeing to win a game of coins by 80% chances of winning. Now the rules of game are that out of 3 coin tosses, if you get 3 heads (all heads), then you win. Ace has a lot of money to bet on. Hence he decides to swiftly replace the coins in casino and replace them with biased coins. These coins are sligtly heavy on one side, but the thing is that Ace doesn't want to take any chances. He makes sure that he has 80% chances of winning, not more, not less. Do you think he will get arrested? 
-                    </div>
-                    <p align="justify">
-                    In the above problem, we are looking at modelling the probability of coin toss so as to win the game of coins. You need to sink in here, that we are not interested in finding the probability of finding 3 heads out of 5 coin tosses rather we are interested in changing the bias of the coin such that probability of 3 heads out of 5 coins is a particular number. This is called Beta Distribution.
-                    </p>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6" style="background-color: #eeeedd;padding: 25px;margin-right: 35px">
-                                <b>Binomial Distribution</b> <br/>
-                                $$ P({(n_1)}_H,{(n_2)}_T) = \cfrac{\Gamma(n_1+n_2+1)}{\Gamma(n_1+1)\Gamma(n_2+1)}p_H^{n_1}(1-p_H)^{n_2} $$
-                                <div id="tester"></div>
-                            </div>
-                             <div class="col-md-5" style="background-color: #eeeedd;padding: 25px;margin-left: 35px">
-                                <b>Beta Distribution</b> <br/>
-                                $$ P(x;[\alpha,\beta]) = \cfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1} $$
-                                <div id="tester"></div>
-                           </div>
+                    <h2 class="subheading">Spoiler Alerts for GOT Fans</h2>
+                    It is highly recommended to watch Game of thrones season 1 to 7 before going ahead. This blog is for GOT Fans who want to build AI Whitewalkers for army of dead.
+                    <h2 class="subheading">Pandora Box of Reinforcement Learning</h2>
+                        <p>Reinforcement learning ! Sounds sassy, doesn't it ? Well it actually is. Imagine if you could teach a machine how to behave in an environment based on rewards or punishments. Just like kiddo learning to backoff from bonfire after burning his hands once. But how does it actually work. Lets grab some popcorns and heed to the dead voice.</p>
+                <h2 class="subheading"> RL in NutShell </h2>
+                <p>Let us say Daenerys Targaryen is the <b> agent </b> we are interested in. We all know what happens when she says dracarys. The fury is unleashed and the <b>environment</b> changes in GOT. Each change in situation has a <b>reward/penalty</b> associated for Daenerys or <b>agent</b>. This makes improve her <b>policies</b>(of choosing action) and  take better actions next time along with tyrion. And after the fury, she moves to a new kingdom or <b>next state</b>. </p>
+                <h2 class="subheading"> Must know terms in RL </h2>
+                <b>Policy : </b> To be demystified after Markov Reward Process<br/>
+                <b>State Value Function $(Vs_{\pi})$</b> For a given policy and environment, How good is it to be in a state? It can answer question John Snow is lingering with . .  . Which state/place is more rewarding, Winterfell or Dragonstone? <br/>
+                <b>Action Value Function $(Va_{\pi}(s))$</b> For a given policy and environment, How good is it to take action <b>a</b> from state <b>s</b>?
+                <h2 class="subheading"> Rewards and Penalties </h2>
+                Before we go to some deep stuff, Let us understand, what is a reward. Reward is bounty associated with reaching a state. Its like the money recieved by cowboys on getting the all goats from medows to downhill. It is also the dopamine spike you get on getting your Facebook post published. There is an immediate reward <b>R</b> ($R(S_t)$), and there is a discounted Reward <b>r</b> $(r(S_t) = R(S_t)+\gamma R(S_{t+1}) + \gamma^2 R(S_{t+2}) \cdots )$. Discounted Reward is like what you get when you post controversial posts on Facebook, Immediate Rewards are good, but future rewards are extremely negetive which eventually makes you rethink in the first place about posting it. Discount is the amount of future you want to consider in your calculation. $\gamma = 1 $ means that you are considering everything in future, and $\gamma = 0$ means you are not thinking about future at all, you are only concerned with immediate reward. In practical scenarios, we keep it at around $0.9$. 
 
-                        </div>
-                    </div> 
-                    <p align="justify">
-                    Do you find anything common in the above equations describing Binomial and Beta Distribution ? Try to substitue $(\alpha,\beta)=(n_1+1,n_2+1)$ It will become almost look like Binomial Distribution. The only difference, if you observe is the constant multiplicative factor and that the p is replaced with x.
-                    This is becaue we are now considering probability(x) as variable, while $(n_1,n_2)$ or number of heads as fixed.
+                    <img src="img/starksvslannisters.jpg" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
+                    <h2 class="subheading">Markov Chain and the king's Landing</h2>
+                    <p>
+                    	We all know the story of mad king, right? Ofcourse you need to watch GOT for that. Kings landing is highly fought out place. Lets assume that there are only two kingdoms contesting - Lannisters and Starks. Now assume that starks are holding it right now. What is the probability of them holding it in the future? Volla, Markov chain will tell it to us. 
                     </p>
-                    Now why are we even studying beta and bernoulli distribution? This is because, we are interested in modelling the gamblers changes of winning 3 trial game, <b>based </b> on his chances of winning single tossing event. In other words we are modelling probability distribution with probability as a variable. Nerds can call it probability of a probability. We will revisit this idea later, but for now you can simply forget this heavy line.
-                    <p align="justify">
-                    This is the reason, we call Beta distribution as a <b>"conjugate prior"</b> of Binomial Distribution. And to answer Gambler's dilemma, we can see from the answer is right on the graph. When p becomes 0.91 his changes of winning are exactly 0.8. Hence he is very likely to be caught if inspected.
-                    </p>
-                    <h2 class="subheading">Simulations in Gaming</h2>
-                    <div style="background-color:#eeeeee;padding:24px;margin: 21px;color: #666666">
-                        For any simulation game and you have a crutial task of simulating the terrain. Now lets say, I tell you, that terrain around  Bangalore in game, should change according to actual terrain.  This is often used in Virtual Reality Gaming. Let us restrict the problem to simulating people on the street who are walking. Now we can't show the actual position of people as we may leak personal data. So we show a simulated map very close to original. Let us say there are <b>n people in total</b> out of which <b> k people are walking </b>. Now this n and k keeps changing right? So how do we design a good simulator?  
-                    </div>
-                    <p align="justify"><b>Solution A</b></p>
-                    <p align="justify">Simplest approach is dividing k by n (p=k/n) and use it as probability of people walking.</p>
-                    <p align="justify"><b>Solution B : More realistic</b></p>
-                    <p align="justify">We don't want to have a constant probability(k/n) for simulation. But we want to sample the probability itself appropriately. That's where we use the buddy of binomial, its "conjugate" prior rather than "actual" prior. That is Beta Distribution. Prior means the know probability of an event. In Bayesian terms we write this as bellow</p>
-                    $$P(label|data)\propto P(data)*P(data|label)$$
-                    <p align="justify"> or in ther words</p>
-                    $$posterior\propto prior*(prior\hspace{0.5 cm}likelihood)$$
-                     But now by the conjugate prior what we are doing is something like this
-                    $$conjugate\hspace{0.5 cm}prior \sim \beta (prior\hspace{0.5 cm}likelihood)$$
-                     </p>
-                     $\sim$ means "sampled from". It means that we are sampling probability value from Beta distribution of Original Prior likelyhood. And use this value instead of (k/n) for generating "walking people" in terrain.
-                     
+                    	Look into the code bellow : It is pretty much self expalatory. 
+					                        
+                <pre class="python">
+                <code>
+import numpy as np
+# S: State Value of house : Its probability of retaining kings landing
+# P: Transition Matrix : from houseA to houseB, what is probability of transistion.
+houses = ["lannisters","starks"]
+S = {"lannisters": 0, "starks":1}
+P = {"from_lannisters":{"to_lannisters": 0.8, "to_starks" : 0.2 }, 
+     "from_starks": {"to_starks": 0.1, "to_lannisters": 0.9}}
+for i in range(5):
+    lannisters_future_stateval, starks_future_stateval = 0,0;
+    
+    lannisters_future_stateval = S["lannisters"]*P["from_lannisters"]["to_lannisters"]+\
+                                S["starks"]*P["from_starks"]["to_lannisters"];
+    
+    starks_future_stateval =  S["lannisters"]*P["from_lannisters"]["to_starks"]+\
+                                S["starks"]*P["from_starks"]["to_starks"];
+    S["lannisters"]=lannisters_future_stateval
+    S["starks"] = starks_future_stateval
+
+print "Volla, '%s' have been winners with %0.2f%% probability to be in king's landing "%(max(S, key=S.get),100*max(S.values()))
+				</code>
+                </pre>
+                <p>In the above code, <b>S</b> is initiallized with [0,1] which means sharks are holding it. <b>P</b> stands for transition probability matrix.  Therefore, <i><b>P</b>["from_lannisters"]["to_starks"]</i>  denotes the probability of succession of kings landing by starks. . Let us look at series of events in the history of succession of king's Landing.</p>
+                <p>
+                	<i>Lannisters -> Starks -> Lannisters -> Lannisters -> Lannisters -> Starks -> Lannisters -> Lannisters -> . . . </i>
+                </p>
+                <p>This chain of successions is modelled and explained by the the transition matrix. What we are interested in is, steady state value of Starks or Lannisters to be in kings landing. So we start of with starks as rulers, but putting the historic truths in place to decide the fate of king's landing. We discover that Lannisters are 81% probable of being in kings landing at any point of time. You can also use this model your food habbits.</p>
 
 
+                <h2 class="subheading"> Bellman Optimality Equation </h2>
+                Bellman optimality equation for Markov Process states, that let us say we have 7 kingdoms fighting wars. The best measure to know which kingdom has an upperhand, is by <br/>
+                <b> Step 1 </b> giving each kingdom a number (Initial State Value ) <br/>
+                <b> Step 2 </b> Updating the value based on probability ( by past records) of my attacks on my neighborhood Kingdoms <br />
+                $V_{\pi}$(lannisters) = p(attacking winterfell)*[immidiate reward of attacking winterfell + $\gamma$*State Value  of winterfell]+same for other neighboring kingdoms  . . . <br/> 
+                <b> Step 3 </b> Keep repeating until convergence.
+
+                <p>It is perfectly fine, if the optimality equation doesn't make any detailed sense right now. It is deliberately left open ended, because the equation keeps changing as per the needs and model. All you need to remember is, that there is some graphical evaluation that is happening over the states in order to obtain state value . This value mysteriously captures and assimilates all information required to make judgement about rewards, etc. This comes directly from markovian property which rips apart previous states to next states, past from future, if the present state value is provided. </p>
+                <h2 class="subheading">Markov Reward Process for John Snow's Journey</h2>
+                <p>Remember the first time when Fire and Ice Met? I am talking about John snow meeting Daenerys Targaryen ! Well we are talking about his return from Dragonstone to beyond the walls. The part very brief in series itself.  So the states here are <i>[Dragonstone,WhiteHarbor, Winterfell]</i>. You can either go to winterfell via walk or you can go via sea to whiteharbor and then go to winterfell. But there is always some danger of spies lurking around at whiteharbor from the spies and pirates.</p>
+                <p>
+                	Markov reward process is nothing new, rather its same old markov chain, bundled with immediate rewards associated with reaching states(in our case, its reaching winterfell, reaching whiteharbor,etc). What we calculate is, that <b><i>how rewarding is it for John Snow to be at a particular state/place?></i></b>. In other words we will calculate, State Value, which represents how rewarding it is to be at that State.
+                </p>
+                <h3>Calculations for the above  MRP </h3>
+                $G_s = R_{s(t+1)} + \gamma R_{s(t+2)} + \gamma^2  R_{s(t+3)}\cdots $<br/>
+	$v(s)=R_s+\gamma\sum_{s'\in S}P_{ss'}v(s')$ <br/>
+	Above equations tell you how to update state value in a given environment.<br/>
+	$\begin{bmatrix}
+	v(1)\\
+	\vdots\\
+	v(n)
+	\end{bmatrix}=\begin{bmatrix}
+	R(1)\\
+	\vdots\\
+	R(n)
+	\end{bmatrix}+\gamma
+	\begin{bmatrix}
+	p_{11} & \cdots & p_{1n}\\
+	\vdots & \ddots & \vdots\\
+	p_{n1} & \cdots & p_{nn}
+	\end{bmatrix}
+	\begin{bmatrix}
+	v(1)\\
+	\vdots\\
+	v(n)
+	\end{bmatrix} $ <br/>
+	<p>For Linear Algera fans, the above equation may come as a blessing. It states how you can concurrently update all state value's vector by doing right product of probabilitistic Transition Matrix with itself. When it reaches steady State, the state values vector becomes a scaled eighen Vector of this transition matrix. Isn't that the very definition of eighen vector? $Av = \lambda v$</p>
+
+                <img src="img/markovianGOT.jpg" class="img-responsive center-block" style='height: 100%; width: 100%; object-fit: contain' />
+                <p>In the code, bellow, we have two extra states, called terminating states. Which means, its the end of the journey,dead or alive. <b>R</b> tells you the reward of being in a particular state. </p>
+                <pre class="python">
+                <code>
+# Markov Reward Process Example
+# Finding Rewarding states for journey of John Snow from dragonstone to winterfell
+import numpy as np
+import copy
+
+S ={"dragonstone": 1,"whiteharbor":1, "winterfell":1} # Active States
+T=["alive-terminal","dead-terminal"] # Terminal States
+R = {"dragonstone": 0,"whiteharbor":10, "winterfell":50,"alive-terminal":100,"dead-terminal":-50}
+P ={"from_dragonstone":{"to_whiteharbor":0.5,"to_winterfell":0.1,"to_dead-terminal":0.4},\
+    "from_whiteharbor":{"to_winterfell":0.1,"to_dead-terminal":0.9},
+   "from_winterfell":{"to_alive-terminal":0.9,"to_dead-terminal":0.1}} # Probabilistic Transition Matrix
+gamma = 0.1
+
+for i in range(45):
+    S1 = copy.copy(S);
+    for castle in S1.keys():
+        reward =0;
+        from_castle='from_'+castle
+        future_states = P[from_castle]
+        for to_castle in future_states:
+            reward=reward+P[from_castle][to_castle]*R[to_castle[3:]];
+        
+        S1[castle] = S[castle]+ gamma*(reward-S1[castle]) 
+    S = copy.copy(S1);
+    print S
+
+                </code>
+                </pre>
+
+
+    			<p>Note that in above Markov Reward Process, we are <b>not deciding</b> our actions at any point. We are only <b>evaluating</b> the state value given an environment(i.e Transition Matrix, Immediate Rewards). The policy comes into picture only in context of Markov Decision Process, not Markov Reward Process. The power to decide comes, when we have freedom to act. Lets look into Markov Decision Process now. </p>
+                <h2 class="subheading">Markov Decision Process - Time to act! </h2>
+MDP breaks the shakles of static probabilistic policy, by learning actions. Every state can take multiple action, and each action is followed by the next state to be chosen is probabilistically. In GOT terms, we can choose to fly directly to winterfell, or we can choose to go via sea, or we can go via land. Now action is left to <b>policy</b> for deciding. Each action branches out to multiple states. You may ask "How can an action lead to further states(multiple)? ". You may choose to boat from dragonstone, but you can land in death (if pirates are there) or you may landup in whiteharbor. Each action can lead you to further states.
+                <h3 class="subheading">Markov Decision Process - Time to act! </h3>
+				The mathematics of MDP and MRP are similar, but it is the context which sets it apart. MDP gives you choice. We learn policy of taking a particular action in MDP. <br/>
+				MDP can be learned by these two algorithm - <br/> 
+				<b>Value Iteration</b> <br/>
+				<b>Policy Iteration</b> <br/>
+				In value iteration, you don't learn policy seperately. You considering most rewarding action as the policy as well as use it for updation of state values. It tends to be a bit slower, because we are changing the best action again and again leading to turbulance. It eventually does converge, but the time taken will be generally more than Policy Iteration. Unlike Value Iteration, Policy Iteration chooses a policy, Evaluates for it, until convergence. Now it chooses a new policy based on these steady state values, and then evaluate the new policy. We keep doing this back and forth until convergence. As you can observe, there are two steps here : policy evaluation and policy update. 
+				<h3 class="subheading">John Snow's way home Revisited </h3>
+				John Snow now wants to carry MDP machine to tell him, which action is best in a given place. The actions he can take in general are going by land, going by sea, or flying on dragon. For each action, there is a possibility to land up at different places/state. What we will learn is the best policy to be choosen from any state/place. The code is self explainatory, so you can just run this code on jupyter and know it for yourself. I am assuming all of you have numpy installed, which sounds quite reasonable.	
+				<h3 class="subheading">Solution by Value Iteration</h3>
+				<pre class="python">
+				<code>
+# Markov Decision Process Example
+import numpy as np
+import copy
+
+S ={"dragonstone": 1,"whiteharbor":1, "winterfell":1} # Active States
+T=["alive-terminal","dead-terminal"] # Terminal States
+R = {"dragonstone": 0,"whiteharbor":10, "winterfell":50,"alive-terminal":100,"dead-terminal":-50}
+P ={"from_dragonstone":{"land":{"to_winterfell":0.5,"to_dead-terminal":0.5},\
+                         "sea":{"to_whiteharbor":0.1,"to_dead-terminal":0.9},\
+                         "dragon":{"to_winterfell":0.95,"to_dead-terminal":0.05}},\
+    "from_whiteharbor":{"land":{"to_winterfell":0.6,"to_dead-terminal":0.4}},
+   "from_winterfell":{"land":{"to_alive-terminal":0.9,"to_dead-terminal":0.1}}}
+gamma = 0.1
+A ={"from_dragonstone":{"land":1,\
+                         "sea":1,\
+                         "dragon":1},
+    "from_whiteharbor":{"land":1},
+   "from_winterfell":{"land":1}}
+
+Policy = {"from_dragonstone":"land","from_whiteharbor":"land","from_winterfell":"land"}
+
+
+# Solution by Value Iteration
+for i in range(15):
+    S1 = copy.copy(S);
+    
+    for castle in S1.keys():
+        from_castle='from_'+castle
+        future_states = P[from_castle]
+        action_reward={}
+        for action in A[from_castle]:
+            reward =0;
+            for to_castle in future_states[action]:
+                reward=reward+P[from_castle][action][to_castle]*R[to_castle[3:]];
+            action_reward[action]=reward
+        Policy[from_castle]=max(action_reward,key=action_reward.get)
+        S1[castle] = S[castle]+ gamma*(max(action_reward.values())-S1[castle]) 
+    S = copy.copy(S1);
+    print 'Value Function',S
+    print 'Learned Policy',Policy
+
+				</code>
+				</pre>
+
+				<h3 class="subheading">Solution by Policy Iteration</h3>
+
+				<pre class="python">
+				<code>
+
+				#Solution by Policy Iteration    
+Policy = {"from_dragonstone":"land","from_whiteharbor":"land","from_winterfell":"land"}
+for i in range(50):
+    S1 = copy.copy(S);
+    
+    #Step 1 : Update Value Fuction
+    for castle in S1.keys():
+        from_castle='from_'+castle
+        future_states = P[from_castle]
+        action = Policy[from_castle] #Based on policy
+        for to_castle in future_states[action]:
+            reward=reward+P[from_castle][action][to_castle]*R[to_castle[3:]];
+        action_reward[action]=reward
+        S1[castle] = S[castle]+ gamma*(reward-S1[castle]) 
+    S = copy.copy(S1);
+    #Step 2 : Update Policy
+    for castle in S1.keys():
+        from_castle='from_'+castle
+        future_states = P[from_castle]
+        action_reward={}
+        for action in A[from_castle]:
+            reward =0;
+            for to_castle in future_states[action]:
+                reward=reward+P[from_castle][action][to_castle]*R[to_castle[3:]];
+            action_reward[action]=reward
+        Policy[from_castle]=max(action_reward,key=action_reward.get) #Update Policy
+
+    
+    print 'Value Function',S
+    print 'Learned Policy',Policy
+
+				</code>
+				</pre>
+
+
+				So let me know your feedback. There will be two more posts on the same topic in these couple of months. Have fun , and keep your fingers crossed, until we have last episode of 7th season of GOT published :) Hope that I can share how I dreamed ML through my blog, and also read from other dreamers alongside. :)
                 </div>
                 <script>
                     TESTER = document.getElementById('tester');
@@ -234,6 +381,23 @@
             </div>
         </div>
     </footer>
+<div id="disqus_thread"></div>
+<script>
+
+var disqus_config = function () {
+this.page.url = "http://jaleyhd.github.io/rlfordeeplearners.html";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "19August2017RLForDeepLearners"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jaleyhd.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+ 
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -248,6 +412,7 @@
     <!-- Theme JavaScript -->
     <script src="js/clean-blog.min.js"></script>
     <script src="js/vis/blog1.js"></script>
+<script id="dsq-count-scr" src="//jaleyhd.disqus.com/count.js" async></script>
 
 </body>
 
