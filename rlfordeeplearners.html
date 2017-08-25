@@ -162,7 +162,10 @@ print "Volla, '%s' have been winners with %0.2f%% probability to be in king's la
 
                 <p>It is perfectly fine, if the optimality equation doesn't make any detailed sense right now. It is deliberately left open ended, because the equation keeps changing as per the needs and model. All you need to remember is, that there is some graphical evaluation that is happening over the states in order to obtain state value . This value mysteriously captures and assimilates all information required to make judgement about rewards, etc. This comes directly from markovian property which rips apart previous states to next states, past from future, if the present state value is provided. </p>
                 <h2 class="subheading">Markov Reward Process for John Snow's Journey</h2>
+
                 <p>Remember the first time when Fire and Ice Met? I am talking about John snow meeting Daenerys Targaryen ! Well we are talking about his return from Dragonstone to beyond the walls. The part very brief in series itself.  So the states here are <i>[Dragonstone,WhiteHarbor, Winterfell]</i>. You can either go to winterfell via walk or you can go via sea to whiteharbor and then go to winterfell. But there is always some danger of spies lurking around at whiteharbor from the spies and pirates.</p>
+                <img src="img/GOTMRP.png" class="img-responsive center-block" style='height: 100%; width: 60%; object-fit: contain' />
+
                 <p>
                 	Markov reward process is nothing new, rather its same old markov chain, bundled with immediate rewards associated with reaching states(in our case, its reaching winterfell, reaching whiteharbor,etc). What we calculate is, that <b><i>how rewarding is it for John Snow to be at a particular state/place?></i></b>. In other words we will calculate, State Value, which represents how rewarding it is to be at that State.
                 </p>
