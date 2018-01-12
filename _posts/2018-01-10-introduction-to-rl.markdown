@@ -126,9 +126,9 @@ Action Value (in steady state ) tells us average reward if we take a particular 
 It is weighted sum of rewards, with weights being decaying exponential with decay factor of $\gamma $. If we are traveling in markovian mini-world, then journey can be summarized by traits of state, action and reward.  
 Footprints : $s_1,a_1,r_1,s_2,a_2,r_2,s_3,a_2,r_3, \cdots$  
 
-$$G(s_2) = r_1+\gamma r_2 + \gamma^2 r_3 + \cdots $$
+$$G(s_2) = r_2+\gamma r_3 + \gamma^2 r_3 + \cdots $$
 
-> We are starting from $r_1$ for $s_2$ because, $r_1$ is reward for reaching $s_2$. Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.  
+> Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.  
 
 Typically we take $\gamma$ as $\geq 0.9$. We can have two extreme cases, based on value of $\gamma$.  
 
@@ -157,17 +157,22 @@ In the next section,  we will learn bellman equations for  Value Iteration as a 
 
 If you can see, the above thug life image of our rat, he is currently in state S1, and we need to find a way to update its state values.
 
-$$ V^{(i+1)}(s_1) \leftarrow R_0 + \gamma \underbrace{max}_{s \in \{s_1,s_2\}} V^{(i)}(s) $$
+$$ V^{(i+1)}(s_1) \leftarrow  \underbrace{max}_{s \in \{s_2,s_3\}} R_{a(s_1,s)} + \gamma  V^{(i)}(s) $$
 
 $$ \pi^{(i+1)}(s_1) = \text{action}\in \{ a_1,a_2 \} \text{ with max future value } \{ V(s_1),V(s_2) \} $$
 
-It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges. 
+It means we change our policy greedily based on higher Value. Let us say $R_2+\gamma V(s_2)$ is 40, and $R_3+\gamma V(s_3)$ is 50, then we select action $a_3$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps simultaneously(unlike policy iteration), until the value and policy converges. 
 
-> Algorithm-1 (Value Iteration)  
-> Initialize V(s) $\forall s \in S$  
+I know, math has started picking up pace, but there is one additional concept which needs to be brought. The outcome of action may be probabilistic. This means, our dear rat may jump from curtain to kitchen, but it can have a crash too. So, these cruel mathematicians added another layer of complexity, with outcome of action being probabilistic. This means same acton a, can lead you to different states probabilistically. For example there a long pit in front of you, the action is jumping, but there is 50-50 chances of either going across the pit, or landing in the pit with mud water. 
+
+
+
+> ***Algorithm-1 (Value Iteration with deterministic action output)***
+> Initialize V(s) $\forall s \in S$
+> i = 0;
 > **while** values converge:  
-> &nbsp;&nbsp;&nbsp;&nbsp;hello
-
+> &nbsp;&nbsp;&nbsp;&nbsp; V(s) \leftarrow R
+> 
 ***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
 
 
