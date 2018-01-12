@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-12T16:22:49+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing Reinforcement Learning</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing Reinforcement Learning" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-12T21:09:32+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing Reinforcement Learning</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing Reinforcement Learning" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
 &lt;p&gt;When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its &lt;strong&gt;Dynamic Programming&lt;/strong&gt;. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.&lt;/p&gt;
 
 &lt;p&gt;In Reinforcement Learning, the substructures are subsolutions. 
@@ -34,7 +34,7 @@ It is  The idea of optimality in Markovian processes, specifically Markov Decisi
   &lt;p&gt;Reward is associated with action (at a given state) and not with the state itself. This is a very common conceptual mistake amongst the beginners.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;strong&gt;Policy&lt;/strong&gt; $\pi(A_t|S_t)$ : Agent’s model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn’t matter if there is rat-trap or boiling water in front of you).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Policy&lt;/strong&gt; $\pi(S_t)$ : Agent’s model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn’t matter if there is rat-trap or boiling water in front of you).&lt;/p&gt;
 
 &lt;h1 id=&quot;no-brainer-policy&quot;&gt;No Brainer Policy&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/img/immediatereward.png&quot; alt=&quot;Immediate Reward&quot; /&gt;&lt;/p&gt;
@@ -95,11 +95,11 @@ We assume that the customer behavior is markovian, which means, kind of cupcake 
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;Output&lt;/strong&gt;&lt;br /&gt;
-(Pchoco,Psberry) = (0.90000,0.10000)&lt;br /&gt;
-(Pchoco,Psberry) = (0.81000,0.19000)&lt;br /&gt;
-(Pchoco,Psberry) = (0.81900,0.18100)&lt;br /&gt;
-(Pchoco,Psberry) = (0.81810,0.18190)&lt;br /&gt;
-(Pchoco,Psberry) = (0.81819,0.18181)&lt;br /&gt;
+(Pchoco , Psberry) = (0.90000 , 0.10000)&lt;br /&gt;
+(Pchoco , Psberry) = (0.81000 , 0.19000)&lt;br /&gt;
+(Pchoco , Psberry) = (0.81900 , 0.18100)&lt;br /&gt;
+(Pchoco , Psberry) = (0.81810 , 0.18190)&lt;br /&gt;
+(Pchoco , Psberry) = (0.81819 , 0.18181)&lt;br /&gt;
 Steady state values of (Pchoco,Psberry) = (0.81819,0.18181)&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -107,36 +107,41 @@ Steady state values of (Pchoco,Psberry) = (0.81819,0.18181)&lt;/p&gt;
 
 &lt;p&gt;We will now introduce 3 new jargons in blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;State Value Function&lt;/strong&gt;  $V(s)$: &lt;br /&gt;
-&lt;strong&gt;Action Value Function&lt;/strong&gt;  $Q(a|s)$:&lt;br /&gt;
-&lt;strong&gt;Discounted Reward or Return&lt;/strong&gt;  $G(s)$:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;State Value Function&lt;/strong&gt;  $V(s)$&lt;br /&gt;
+State Value (in steady state) tells us average reward from a given state. We can compare average rewards of two states based on this value. It can also be looked upon as gist of rewards sprouting out of current state. It possesses markovian property which means, that we can safely cut of calculations of states which are not directly reachable to the current state.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Action Value Function&lt;/strong&gt;  $Q(a|s)$&lt;br /&gt;
+Action Value (in steady state ) tells us average reward if we take a particular action from a given state. This is also markovian in nature. We also call them Q values. We will soon look in the details when we study Q Learning and SARSA update.&lt;/p&gt;
 
-&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techniques? The Caffeine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Discounted Reward or Return&lt;/strong&gt;  $G(s)$&lt;br /&gt;
+It is weighted sum of rewards, with weights being decaying exponential with decay factor of $\gamma $. If we are traveling in markovian mini-world, then journey can be summarized by traits of state, action and reward.&lt;br /&gt;
+Footprints : $s_1,a_1,r_1,s_2,a_2,r_2,s_3,a_2,r_3, \cdots$&lt;/p&gt;
 
-&lt;p&gt;Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;G(s_2) = r_1+\gamma r_2 + \gamma^2 r_3 + \cdots&lt;/script&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We are starting from $r_1$ for $s_2$ because, $r_1$ is reward for reaching $s_2$. Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Typically we take $\gamma$ as $\geq 0.9$. We can have two extreme cases, based on value of $\gamma$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Case I&lt;/em&gt;&lt;/strong&gt;   ( $\gamma = 0$ )&lt;br /&gt;
+If $\gamma = 0 $ , we become like &lt;strong&gt;&lt;em&gt;no-brainer&lt;/em&gt;&lt;/strong&gt; policy, which we had described earlier.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Case II&lt;/em&gt;&lt;/strong&gt; ($\gamma = 1$)&lt;br /&gt;
+If we make $\gamma = 1$, then we make the reward as sum of all future rewards it will ever have, till it hits one of the terminal state.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note that there is a problem with keeping $\gamma = 1$, In case there are loops in the state transition (i.e, loop means it can come back to the same state again for any state), than it give unstable and inaccurate values.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;learning-policy&quot;&gt;Learning Policy&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/img/ratinmap.png&quot; alt=&quot;Rat in Map&quot; /&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum\limits_{i=0}^{i=m}n_i=n&lt;/script&gt;
+&lt;p&gt;Our dear rat, is on a mission to discover most rewarding path to cheese. He can either climb up through the curtains and jump on kitchen floor, or he can climb via plants in balcony and enter kitchen from window. To learn the most optimal policy is rat’s goal, and is also the goal of Reinforcement Learning. A policy charts out the action to be taken in a given state. Think of it like SIRI in navigation. At each turn(state), SIRI tells you the next best action.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum\limits_{i=0}^{i=m}p_i=1&lt;/script&gt;
-
-&lt;p&gt;This joint probability (which is our objective) is given by equation bellow :&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(n_1,n_2,\cdots c_m)=\cfrac{\Gamma(n_1+n_2 + \cdots n_m+1)}{\Gamma(n_1+1)\Gamma(n_2+1)\cdots \Gamma(n_m+1)}p_1^{n_1} p_2^{n_2} \cdots p_m^{n_m}&lt;/script&gt;
-
-&lt;p&gt;where $\Gamma(n)=(n-1)!$ or in other words  $\Gamma(n)=(n-1)(n-2)\cdots 1$.
-Wait a second. Does this equation look familiar? I know its too long, but doesn’t it remind of some other equation ? Well . . . you guessed it right. It looks very similar to binomial distribution. If there are only two catagories. Here head occurs n1 times and tail occurs n-n1 times The equation becomes&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(n_1,n-n1)=\cfrac{\Gamma(n+1)}{\Gamma(n_1+1)\Gamma(n-n_1+1)}p_1^{n_1} p_2^{n-n_1}&lt;/script&gt;
-
-&lt;p&gt;or simplifying it further it becomes&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;p((n_1)_H)= ^nC_{n_1} p_1^{n_1} p_2^{n-n_1}&lt;/script&gt;
-
-&lt;p&gt;Here $p((n_1)_H)$ is nothing but probability of getting $n_1$ heads out of n trials.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why is RL a Game Changer? When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its Dynamic Programming. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.</summary></entry><entry><title type="html">Topic Modelling</title><link href="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Topic Modelling" /><published>2018-01-08T19:20:38+05:30</published><updated>2018-01-08T19:20:38+05:30</updated><id>http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html">&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Why is RL a Game Changer? When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its Dynamic Programming. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.</summary></entry><entry><title type="html">Topic Modelling</title><link href="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Topic Modelling" /><published>2018-01-08T19:20:38+05:30</published><updated>2018-01-08T19:20:38+05:30</updated><id>http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html">&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
 
 &lt;p&gt;Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :&lt;/p&gt;
 

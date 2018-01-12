@@ -42,7 +42,7 @@ Remy the rat is the best example of RL Agent, trying to discover optimal way of 
 > Reward is associated with action (at a given state) and not with the state itself. This is a very common conceptual mistake amongst the beginners. 
 
 
-**Policy** $\pi(A_t\|S_t)$ : Agent's model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn't matter if there is rat-trap or boiling water in front of you). 
+**Policy** $\pi(S_t)$ : Agent's model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn't matter if there is rat-trap or boiling water in front of you). 
 
 
 # No Brainer Policy
@@ -105,51 +105,50 @@ print ("Steady state values of (Pchoco,Psberry) = (%0.5f,%0.5f)"%(S["choco"],S["
 
 {% endhighlight %}
 > **Output**  
-> (Pchoco,Psberry) = (0.90000,0.10000)  
-> (Pchoco,Psberry) = (0.81000,0.19000)  
-> (Pchoco,Psberry) = (0.81900,0.18100)  
-> (Pchoco,Psberry) = (0.81810,0.18190)  
-> (Pchoco,Psberry) = (0.81819,0.18181)  
+> (Pchoco , Psberry) = (0.90000 , 0.10000)  
+> (Pchoco , Psberry) = (0.81000 , 0.19000)  
+> (Pchoco , Psberry) = (0.81900 , 0.18100)  
+> (Pchoco , Psberry) = (0.81810 , 0.18190)  
+> (Pchoco , Psberry) = (0.81819 , 0.18181)  
 > Steady state values of (Pchoco,Psberry) = (0.81819,0.18181)
 
 As we have now established some background of Markov Chain, we will try to wrestle with MDP (Markov Decision Process). Unlike the previous examples MDP's don't estimate steady state probability, they estimate steady state value function. Think of it as a number (not necessarily between 0 and 1) which tells you how rewarding the state is to be. Value Function in steady state tells you average reward you get by traveling anywhere from the given state.
 
 We will now introduce 3 new jargons in blog.
 
-**State Value Function**  $V(s)$:   
-**Action Value Function**  $Q(a|s)$:  
-**Discounted Reward or Return**  $G(s)$: 
+**State Value Function**  $V(s)$  
+State Value (in steady state) tells us average reward from a given state. We can compare average rewards of two states based on this value. It can also be looked upon as gist of rewards sprouting out of current state. It possesses markovian property which means, that we can safely cut of calculations of states which are not directly reachable to the current state.  
+
+**Action Value Function**  $Q(a|s)$  
+Action Value (in steady state ) tells us average reward if we take a particular action from a given state. This is also markovian in nature. We also call them Q values. We will soon look in the details when we study Q Learning and SARSA update.  
+
+**Discounted Reward or Return**  $G(s)$  
+It is weighted sum of rewards, with weights being decaying exponential with decay factor of $\gamma $. If we are traveling in markovian mini-world, then journey can be summarized by traits of state, action and reward.  
+Footprints : $s_1,a_1,r_1,s_2,a_2,r_2,s_3,a_2,r_3, \cdots$  
+
+$$G(s_2) = r_1+\gamma r_2 + \gamma^2 r_3 + \cdots $$
+
+> We are starting from $r_1$ for $s_2$ because, $r_1$ is reward for reaching $s_2$. Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.  
+
+Typically we take $\gamma$ as $\geq 0.9$. We can have two extreme cases, based on value of $\gamma$.  
+
+***Case I***   ( $\gamma = 0$ )  
+If $\gamma = 0 $ , we become like ***no-brainer*** policy, which we had described earlier.  
+
+***Case II*** ($\gamma = 1$)  
+If we make $\gamma = 1$, then we make the reward as sum of all future rewards it will ever have, till it hits one of the terminal state.  
 
 
+> Note that there is a problem with keeping $\gamma = 1$, In case there are loops in the state transition (i.e, loop means it can come back to the same state again for any state), than it give unstable and inaccurate values. 
 
-***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
-
-
-Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can't I organize the articles by cool ML Techniques? The Caffeine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example 'Novak Djokovic' retiring comes under Sports section and 'Hillary vs Trump' comes under politics section.
-
-Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :
-
+# Learning Policy
 
 ![Rat in Map](/assets/img/ratinmap.png)
 
-$$\sum\limits_{i=0}^{i=m}n_i=n$$
+Our dear rat, is on a mission to discover most rewarding path to cheese. He can either climb up through the curtains and jump on kitchen floor, or he can climb via plants in balcony and enter kitchen from window. To learn the most optimal policy is rat's goal, and is also the goal of Reinforcement Learning. A policy charts out the action to be taken in a given state. Think of it like SIRI in navigation. At each turn(state), SIRI tells you the next best action.
 
-$$\sum\limits_{i=0}^{i=m}p_i=1$$
 
-This joint probability (which is our objective) is given by equation bellow :
-
-$$p(n_1,n_2,\cdots c_m)=\cfrac{\Gamma(n_1+n_2 + \cdots n_m+1)}{\Gamma(n_1+1)\Gamma(n_2+1)\cdots \Gamma(n_m+1)}p_1^{n_1} p_2^{n_2} \cdots p_m^{n_m}$$
-
-where $\Gamma(n)=(n-1)!$ or in other words  $\Gamma(n)=(n-1)(n-2)\cdots 1$.
-Wait a second. Does this equation look familiar? I know its too long, but doesn't it remind of some other equation ? Well . . . you guessed it right. It looks very similar to binomial distribution. If there are only two catagories. Here head occurs n1 times and tail occurs n-n1 times The equation becomes
-
-$$p(n_1,n-n1)=\cfrac{\Gamma(n+1)}{\Gamma(n_1+1)\Gamma(n-n_1+1)}p_1^{n_1} p_2^{n-n_1}$$
-
-or simplifying it further it becomes
-
-$$p((n_1)_H)= ^nC_{n_1} p_1^{n_1} p_2^{n-n_1}$$
-
-Here $p((n_1)_H)$ is nothing but probability of getting $n_1$ heads out of n trials.
+***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
 
 {% comment %} 
 >You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
