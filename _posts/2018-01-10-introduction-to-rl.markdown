@@ -145,10 +145,31 @@ If we make $\gamma = 1$, then we make the reward as sum of all future rewards it
 
 ![Rat in Map](/assets/img/ratinmap.png)
 
+$$ \pi (s) : S \rightarrow A $$
+
 Our dear rat, is on a mission to discover most rewarding path to cheese. He can either climb up through the curtains and jump on kitchen floor, or he can climb via plants in balcony and enter kitchen from window. To learn the most optimal policy is rat's goal, and is also the goal of Reinforcement Learning. A policy charts out the action to be taken in a given state. Think of it like SIRI in navigation. At each turn(state), SIRI tells you the next best action.
 
+In the next section,  we will learn bellman equations for  Value Iteration as a way of getting best policy.
+
+# Bellman Equations  
+*Bellman Optimality Equation for Value Iteration*
+
+
+If you can see, the above thug life image of our rat, he is currently in state S1, and we need to find a way to update its state values.
+
+$$ V^{(i+1)}(s_1) \leftarrow R_0 + \gamma \underbrace{max}_{s \in \{s_1,s_2\}} V^{(i)}(s) $$
+
+$$ \pi^{(i+1)}(s_1) = \text{action}\in \{ a_1,a_2 \} \text{ with max future value } \{ V(s_1),V(s_2) \} $$
+
+It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges. 
+
+> Algorithm-1 (Value Iteration)  
+> Initialize V(s) $\forall s \in S$  
+> **while** values converge:  
+> &nbsp;&nbsp;&nbsp;&nbsp;hello
 
 ***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
+
 
 {% comment %} 
 >You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
