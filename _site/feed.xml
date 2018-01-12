@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-10T23:04:35+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing Reinforcement Learning</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing Reinforcement Learning" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-12T16:22:49+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing Reinforcement Learning</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing Reinforcement Learning" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
 &lt;p&gt;When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its &lt;strong&gt;Dynamic Programming&lt;/strong&gt;. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.&lt;/p&gt;
 
 &lt;p&gt;In Reinforcement Learning, the substructures are subsolutions. 
@@ -8,19 +8,116 @@ It is  The idea of optimality in Markovian processes, specifically Markov Decisi
   &lt;p&gt;If you have mercury thermometers at home for measuring fever, you can observe, how mercury comes to steady state. This can be looked as markov process with single state. However, things can be pretty messed up, in case of pan, where different parts of pan(continuous state) are at different temperature, yet at an equilibrium. To explain such behavior in thermodyamics, we can use Bellman Equations.&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;p&gt;&lt;img src=&quot;/assets/img/ratatouillebanner.png&quot; alt=&quot;Ratatouille Banner&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;The textbook examples of mouse discovering cheese may seem oversimplified, but it is not. It provides all we need, to define the distressing jargons of RL.&lt;/p&gt;
 
-&lt;p&gt;How many of you readers have watched Ratatouile Movie? If you have not, do watch it first, before you read further, because  we will be using life of Chef Remy(the great rat) in the blog to explain Reinforcement Learning is from that movie only. It is strictly non-negotiable prerequesite :p.&lt;/p&gt;
+&lt;p&gt;How many of you readers have watched Ratatouile Movie? If you have not, do watch it first, before you read further, because  we will be using life of Chef Remy(the great rat) in the blog to explain Reinforcement Learning is from that movie only. It is strictly non-negotiable prerequisite :p.&lt;/p&gt;
 
 &lt;p&gt;Remy the rat is the best example of RL Agent, trying to discover optimal way of getting maximum reward (cheese) in streets of paris (RL Environment). Agent interacts with environment and learns how to act better.&lt;/p&gt;
 
-&lt;p&gt;We&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/rljargons.png&quot; alt=&quot;RL Jargons&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Observation&lt;/em&gt;&lt;/strong&gt; $(O_t)$ : It is how the agent &lt;em&gt;currently&lt;/em&gt; perceives the environment. It can be image, sound, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;State&lt;/em&gt;&lt;/strong&gt; $(S_t)$ : David Silver describes Agent State as agent’s internal representation of environment. It can be  any function of observation history. Your current position with respect to starting point is one kind of state. Latitude, Longitude is another example of state variable.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;State is different from observation, because it has more summarized and tangible information. There is an environment state (how environment perceives itself) and an Agent state. Here, we are referring to Agent State&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Action&lt;/strong&gt; $(A_t)$ : Agent’s choices in a given state. For example taking left turn, taking right turn, applying break, etc can be considered actions while driving a car.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Reward&lt;/strong&gt; $(R_t)$ : Reward is the incentive given by environment to agent, for taking an action at a given state.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Reward is associated with action (at a given state) and not with the state itself. This is a very common conceptual mistake amongst the beginners.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Policy&lt;/strong&gt; $\pi(A_t|S_t)$ : Agent’s model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn’t matter if there is rat-trap or boiling water in front of you).&lt;/p&gt;
+
+&lt;h1 id=&quot;no-brainer-policy&quot;&gt;No Brainer Policy&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/immediatereward.png&quot; alt=&quot;Immediate Reward&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;What is the simplest policy can follow in any environment? Well, we can just look at immediate reward and decide our next state. As you can see in the above diagram, such policy would take the yellow path, as it goes by immediate reward. So I guess you know what’s the problem. The problem is, that this no-brainer policy doesn’t know if there is another path which could eventually make it hit the jackpot. Thats the exact reason we need a dynamic model which takes into account future rewards. We will come back to this problem after a short detour of Markov Chain which is necessary to understand dynamic systems.&lt;/p&gt;
+
+&lt;h1 id=&quot;markov-chain&quot;&gt;Markov Chain&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/cupcakemarkovchain.png&quot; alt=&quot;Cupcake Markov Chain&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In 2 broke girls, do you know why the cupcake business kick-started by X and Y did not take off? Well, its because they didn’t meet pal of Z from Russia. Ya, you guessed it, Its Markov. Had they met Markov, he would have explained how customers are eating cupcakes.&lt;/p&gt;
+
+&lt;p&gt;Now strawberry cupcake tastes great, but you are unlikely to get addicted to it, on the other hand, chocolate cupcakes, just hit the right spot in brain, releasing all endorphins. Therefore, you will keep buying chocolate cupcakes again and again.&lt;/p&gt;
+
+&lt;p&gt;Our target here is to find probability of buying strawberry cupcake opposed to buying chocolate cupcake. And so, we setout a simple experiment. With help of Markov, we track a customer’s cupcake pattern and find out the transition probabilities based on counts. Let me explain.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h3 id=&quot;constructing-markov-transition-model-from-scratch&quot;&gt;Constructing Markov Transition model from scratch&lt;/h3&gt;
+  &lt;p&gt;If a customer bought 101 cupcakes in 101 days. He transitioned from chocolate to strawberry only 5 times, kept holding on to chocolate for 45 times. Similarly he transitioned from strawberry to chocolate 25 times, and strawberry to strawberry another 25 times.&lt;/p&gt;
+
+  &lt;script type=&quot;math/tex; mode=display&quot;&gt;P(S | C) = P(C\rightarrow S) = \cfrac{\#C\rightarrow S}{\#C} = \cfrac{\#C\rightarrow S}{\#C\rightarrow S + \#C\rightarrow C} = \cfrac{5}{5+45} =0.1&lt;/script&gt;
+
+  &lt;p&gt;Even though the transition model looks rock solid, there is fundamental assumption we have made. Any guesses?&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;Markovian Property&lt;/strong&gt;&lt;br /&gt;
+We assume that the customer behavior is markovian, which means, kind of cupcake I buy today can be totally determined by cupcake I bought yesterday. This means, in a markov chain, aka cupcake chain (unrolled in time), what you buy 5 days back becomes irrelevant if I know what you bought yesterday. Mathematicians state this as conditional independence. Formally , we can say that, future states becomes conditionally independent of past states, if we know current state.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are two ways of finding out probability of states from state transition model. First one is matrix way. Equate weighted sum of incoming transitions to state probability for each of the state. You get two equations, two variables and solution.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}0.9C+0.1S=C\end{equation}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}0.5C+0.5S=S\end{equation}&lt;/script&gt;
+
+&lt;p&gt;But if there are too many states, the rank of linear equations may be less than number of equations or the susceptibility of pseudo inverse evaluation to changes in state is too much. In short, we want fast-converging approximate non-optimal solution to the problem. Therefore, comes the second way of evaluation.&lt;/p&gt;
+
+&lt;p&gt;Assume, Any two probability values of cupcakes. Now keep updating each of these values based on equations, until they converge. In other words, we want steady state solution.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# S: State Value of cupcake_flavor : Its probability of buying the flavor. &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# P: Transition Matrix : from cupcake_flavorA to cupcake_flavorA, what is probability of transition.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cupcakes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;to_sberry&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; 
+     &lt;span class=&quot;s&quot;&gt;&quot;from_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;to_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;choco_future_stateval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sberry_future_stateval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;choco_future_stateval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;\
+                            &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;sberry_future_stateval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from_choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;\
+                              &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;to_sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choco_future_stateval&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sberry_future_stateval&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;(Pchoco,Psberry) = (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%0.5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;f,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%0.5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;f)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Steady state values of (Pchoco,Psberry) = (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%0.5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;f,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%0.5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;f)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choco&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sberry&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Output&lt;/strong&gt;&lt;br /&gt;
+(Pchoco,Psberry) = (0.90000,0.10000)&lt;br /&gt;
+(Pchoco,Psberry) = (0.81000,0.19000)&lt;br /&gt;
+(Pchoco,Psberry) = (0.81900,0.18100)&lt;br /&gt;
+(Pchoco,Psberry) = (0.81810,0.18190)&lt;br /&gt;
+(Pchoco,Psberry) = (0.81819,0.18181)&lt;br /&gt;
+Steady state values of (Pchoco,Psberry) = (0.81819,0.18181)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As we have now established some background of Markov Chain, we will try to wrestle with MDP (Markov Decision Process). Unlike the previous examples MDP’s don’t estimate steady state probability, they estimate steady state value function. Think of it as a number (not necessarily between 0 and 1) which tells you how rewarding the state is to be. Value Function in steady state tells you average reward you get by traveling anywhere from the given state.&lt;/p&gt;
+
+&lt;p&gt;We will now introduce 3 new jargons in blog.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;State Value Function&lt;/strong&gt;  $V(s)$: &lt;br /&gt;
+&lt;strong&gt;Action Value Function&lt;/strong&gt;  $Q(a|s)$:&lt;br /&gt;
+&lt;strong&gt;Discounted Reward or Return&lt;/strong&gt;  $G(s)$:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
+&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techniques? The Caffeine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
 
 &lt;p&gt;Let us consider a scenario where there are n simultaneously occuring events. Each event has m catagories namely $[c_1,c_2,\cdots c_m]$ with probability $[p_1,p_2,\cdots p_m]$ respectively. Now our objective is to find the probability of category $c_1$ occuring $n_1$ times,$c_1$ occuring $n_2$ times, and so on. In other words $[c_1,c_2,\cdots c_m]$ occuring $[n_1,n_2,\cdots n_m]$. Here there two intuitive lemmas/observed constrains are as stated bellow :&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/ratinmap.png&quot; alt=&quot;Rat in Map&quot; /&gt;&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum\limits_{i=0}^{i=m}n_i=n&lt;/script&gt;
 
