@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-13T06:35:37+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing RL</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing RL" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-13T06:51:26+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing RL</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing RL" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
 &lt;p&gt;When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its &lt;strong&gt;Dynamic Programming&lt;/strong&gt;. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.&lt;/p&gt;
 
 &lt;p&gt;In Reinforcement Learning, the substructures are subsolutions. 
@@ -117,10 +117,10 @@ Action Value (in steady state ) tells us average reward if we take a particular 
 It is weighted sum of rewards, with weights being decaying exponential with decay factor of $\gamma $. If we are traveling in markovian mini-world, then journey can be summarized by traits of state, action and reward.&lt;br /&gt;
 Footprints : $s_1,a_1,r_1,s_2,a_2,r_2,s_3,a_2,r_3, \cdots$&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;G(s_2) = r_1+\gamma r_2 + \gamma^2 r_3 + \cdots&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;G(s_2) = r_2+\gamma r_3 + \gamma^2 r_3 + \cdots&lt;/script&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;We are starting from $r_1$ for $s_2$ because, $r_1$ is reward for reaching $s_2$. Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.&lt;/p&gt;
+  &lt;p&gt;Please, do not associate reward with state, reward is always associated with action in $99\%$ cases.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;Typically we take $\gamma$ as $\geq 0.9$. We can have two extreme cases, based on value of $\gamma$.&lt;/p&gt;
@@ -150,18 +150,13 @@ If we make $\gamma = 1$, then we make the reward as sum of all future rewards it
 
 &lt;p&gt;If you can see, the above thug life image of our rat, he is currently in state S1, and we need to find a way to update its state values.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;V^{(i+1)}(s_1) \leftarrow R_0 + \gamma \underbrace{max}_{s \in \{s_1,s_2\}} V^{(i)}(s)&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V^{(i+1)}(s_1) \leftarrow  \underbrace{max}_{s \in \{s_2,s_3\}} R_{a(s_1,s)} + \gamma  V^{(i)}(s)&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\pi^{(i+1)}(s_1) = \text{action}\in \{ a_1,a_2 \} \text{ with max future value } \{ V(s_1),V(s_2) \}&lt;/script&gt;
 
-&lt;p&gt;It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.&lt;/p&gt;
+&lt;p&gt;It means we change our policy greedily based on higher Value. Let us say $R_2+\gamma V(s_2)$ is 40, and $R_3+\gamma V(s_3)$ is 50, then we select action $a_3$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps simultaneously(unlike policy iteration), until the value and policy converges.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Algorithm-1 (Value Iteration)&lt;br /&gt;
-Initialize V(s) $\forall s \in S$&lt;br /&gt;
-&lt;strong&gt;while&lt;/strong&gt; values converge:&lt;br /&gt;
-    hello&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;I know, math has started picking up pace, but there is one additional concept which needs to be brought. The outcome of action may be probabilistic. This means, our dear rat may jump from curtain to kitchen, but it can have a crash too. So, these cruel mathematicians added another layer of complexity, with outcome of action being probabilistic. This means same acton a, can lead you to different states probabilistically. For example there a long pit in front of you, the action is jumping, but there is 50-50 chances of either going across the pit, or landing in the pit with mud water.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -177,6 +172,15 @@ Initialize V(s) $\forall s \in S$&lt;br /&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;&lt;em&gt;Algorithm-1 (Value Iteration with deterministic action output)&lt;/em&gt;&lt;/strong&gt;
+Initialize V(s) $\forall s \in S$
+i = 0;
+&lt;strong&gt;while&lt;/strong&gt; values converge:&lt;br /&gt;
+     V(s) \leftarrow R&lt;/p&gt;
+
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Why is RL a Game Changer? When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its Dynamic Programming. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.</summary></entry><entry><title type="html">Topic Modelling</title><link href="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Topic Modelling" /><published>2018-01-08T19:20:38+05:30</published><updated>2018-01-08T19:20:38+05:30</updated><id>http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html">&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
 
