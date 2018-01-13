@@ -7,7 +7,7 @@ comments: true
 categories: reinforcement-learning
 ---
 
-# Why is RL a Game Changer?
+## Why is RL a Game Changer?
 When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950's Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its **Dynamic Programming**. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem. 
 
 In Reinforcement Learning, the substructures are subsolutions. 
@@ -45,12 +45,12 @@ Remy the rat is the best example of RL Agent, trying to discover optimal way of 
 **Policy** $\pi(S_t)$ : Agent's model for deciding action in a given state. For example uniform random policy means, take any action randomly in a given state. Absolute greedy policy means, just go by immediate reward. For rat, it means, just sniff the smell of cheese, whichever direction has most aroma, go there (doesn't matter if there is rat-trap or boiling water in front of you). 
 
 
-# No Brainer Policy
+## No Brainer Policy
 ![Immediate Reward](/assets/img/immediatereward.png)
 
 What is the simplest policy can follow in any environment? Well, we can just look at immediate reward and decide our next state. As you can see in the above diagram, such policy would take the yellow path, as it goes by immediate reward. So I guess you know what's the problem. The problem is, that this no-brainer policy doesn't know if there is another path which could eventually make it hit the jackpot. Thats the exact reason we need a dynamic model which takes into account future rewards. We will come back to this problem after a short detour of Markov Chain which is necessary to understand dynamic systems.
 
-# Markov Chain
+## Markov Chain
 ![Cupcake Markov Chain](/assets/img/cupcakemarkovchain.png)
 
 In 2 broke girls, do you know why the cupcake business kick-started by X and Y did not take off? Well, its because they didn't meet pal of Z from Russia. Ya, you guessed it, Its Markov. Had they met Markov, he would have explained how customers are eating cupcakes. 
@@ -60,10 +60,10 @@ Now strawberry cupcake tastes great, but you are unlikely to get addicted to it,
 Our target here is to find probability of buying strawberry cupcake opposed to buying chocolate cupcake. And so, we setout a simple experiment. With help of Markov, we track a customer's cupcake pattern and find out the transition probabilities based on counts. Let me explain. 
 
 
-> ### Constructing Markov Transition model from scratch
+> #### Constructing Markov Transition model from scratch
 > If a customer bought 101 cupcakes in 101 days. He transitioned from chocolate to strawberry only 5 times, kept holding on to chocolate for 45 times. Similarly he transitioned from strawberry to chocolate 25 times, and strawberry to strawberry another 25 times.
 >
- $$ P(S | C) = P(C\rightarrow S) = \cfrac{\#C\rightarrow S}{\#C} = \cfrac{\#C\rightarrow S}{\#C\rightarrow S + \#C\rightarrow C} = \cfrac{5}{5+45} =0.1 $$
+ $$ \small P(S | C) = P(C\rightarrow S) = \cfrac{\#C\rightarrow S}{\#C} = \cfrac{\#C\rightarrow S}{\#C\rightarrow S + \#C\rightarrow C} = \cfrac{5}{5+45} =0.1 $$
 > 
 >  Even though the transition model looks rock solid, there is fundamental assumption we have made. Any guesses? 
 >
@@ -165,22 +165,81 @@ It means we change our policy greedily based on higher Value. Let us say $R_2+\g
 
 I know, math has started picking up pace, but there is one additional concept which needs to be brought. The outcome of action may be probabilistic. This means, our dear rat may jump from curtain to kitchen, but it can have a crash too. So, these cruel mathematicians added another layer of complexity, with outcome of action being probabilistic. This means same acton a, can lead you to different states probabilistically. For example there a long pit in front of you, the action is jumping, but there is 50-50 chances of either going across the pit, or landing in the pit with mud water. 
 
+![Rat jumping from curtain](/assets/img/jumpingratmdpcropped.jpg)
 
 
 
-| Tables        | Are           | 
-| ------------- |-------------| 
-| It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.      | It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges. | 
+| Bellman Expectation Equation | Bellman Optimality Equation | 
+| ---------------------------- |-----------------------------| 
+| Evaluating a given policy  | Involves learning an optimal policy |
+| $$ \scriptsize v_{\pi}^{(i+1)}(s) \leftarrow E_{\pi}\{R_{next}+\gamma v_{\pi}(s_{next})\} $$ | $$ \scriptsize v^{(i+1)}(s) \leftarrow max\{ R_{next}+\gamma v(s_{next}) \} $$ |
+| $$ \scriptsize v_{\pi}^{i+1}(s) \leftarrow E_{\pi}\{R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s')\} $$ | $$ \scriptsize v^{i+1}(s) \leftarrow max\{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \}  $$ |
+|where $a = \pi(s)$ | where $a$ is action that offshoots from s.
+|No policy is updated | Update $\pi(s)\leftarrow a$ with action ($a$) corresponding to maximum value in above stated value update.|  
+
+Bellman equations give us a way of updating the value. They are not a set of equations which are restricted to only RL. They are typically associated with updates in DP (Dynamic Programming) problems. In value iteration, we simply select the policy  based on the action which higher expected reward from a given state. And we keep overwriting this expected reward to current value associated with state. This keeps going until we have reached equilibrium or a place where value is same as highest expected reward, and meanwhile the policy corresponding to this steady state is also optimal. *You can look up David Silver's notes to get proof of why convergence of value in Value Iteration also implies convergence of policy.*  
 
 
-> ***Algorithm-1 (Value Iteration with deterministic action output)***
-> Initialize V(s) $\forall s \in S$
-> i = 0;
+> **ALGORITHM-1 \| VALUE ITERATION**  
+>   
+> Initialize V(s) $\forall s \in S$  
+> i = 0;  
 > **while** values converge:  
-> &nbsp;&nbsp;&nbsp;&nbsp; V(s) \leftarrow R
-> 
+> &nbsp;&nbsp;&nbsp;&nbsp; $$v^{(i+1)}(s) \leftarrow max \{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \} $$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(Value Update)*  
+> &nbsp;&nbsp;&nbsp;&nbsp; $$\pi (s) \leftarrow \underset{a}{argmax} \{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \} $$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(Policy Update)*  
+> **end while**  
+>  
+> *Note that here $R_{next}$ is reward for taking actions from current state. $s_{next}$ is one of the possible states an action can land it into* 
+>
 
-***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
+In the above equation, you can clearly observe that in each iteration policy and value update are happening. But there is a better way of doing it. What if we first fix the policy and let the values converge (lets say x number of iterations). Then used these converged values to update policy. Doesn't it seem better than constantly changing both policy and value together?
+
+### Policy Iteration
+Let's say you are in exam hall for derivation. There are 5 different ways(policy) of completing exam paper. Some people complete 1 markers first, some 5 markers first, etc. If you constantly keep changing policy in head, it is difficult to reach convergence/complete paper properly. Something similar happens in Policy Iteration. 
+
+
+![ Policy Iteration ](/assets/img/policyiteration.png)
+
+As shown in above illustration, policy iteration has two phases. Value Update and Policy Update. Previously in Value Iteration, we updated policy and value simultaneously. Policy Iteration is generally a better choice than Value Iteration. The pseudo-code of policy iteration is as given bellow.
+
+The question comes up, can we learn action values instead of state values? The answer is yes. But it will converge with order of complexity $$ O(\#a^2.\#s^2)$$, which is slower as compared to 
+$$ O(\#a.\#s^2)$$ in state value based Update.  
+*Note that there are lot of advantages of action values, which will uncover when we discuss Model Free Methods*
+
+> **ALGORITHM-2 \| POLICY ITERATION**  
+>   
+> Initialize V(s) $\forall s \in S$  
+> i = 0;  
+> **while** policy converges:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(policy same as before $\forall$ states)*  
+> &nbsp;&nbsp;&nbsp;&nbsp; **while** values converge:  
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $$v^{(i+1)}(s) \leftarrow max \{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \} $$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(Value Update)*  
+> &nbsp;&nbsp;&nbsp;&nbsp;**end while**  
+> &nbsp;&nbsp;&nbsp;&nbsp; $$\pi (s) \leftarrow \underset{a}{argmax} \{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \} $$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(Policy Update)*  
+> **end while**  
+
+Action values, also called q values are associated with state-action pair and not the action alone. The action is always with respect to some state. If you see the bellow unrolled illustration of value update, you can observe that maximization is happening at secondary nodes in case of action value update.
+
+|  State Value Update | Action Value Update   |
+|----------------------|-----------------------|
+| ![State Value Update unrolled ](/assets/img/bellmanequationstatevaluefn.png) | ![Action Value Update unrolled](/assets/img/bellmanequationactionvaluefn.png) |
+| $$ \scriptsize v^{i+1}(s) \leftarrow max \{R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \} $$ | $$ \scriptsize q^{i+1}(s,a) \leftarrow R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}\underset{a'}{max} \{q_{\pi}(s',a') \} $$  |
+| Update policy based on action with max expected reward or $$\scriptsize \underset{a}{argmax} \{ R_{sa}+\gamma \sum\limits_{s'\in S} p_{sas'}v_{\pi}(s') \}$$ | Update policy based on  action with higher $q(s,a)$ value |
+
+
+For instance, $$ \small v_{s_1} = max\{R_{s,a_1}+ 0.5v_2+0.5v_3 ,R_{s,a_2}+ 0.5v_4+0.5v_5 \}  $$ for state value update  and   $$ \small q_1 = R_{s,a_1} +  0.5*max\{ q_2,q_3 \} + 0.5*max\{ q_4,q_5 \}  $$ for value update illustration shown above.
+
+
+### Limitations of MDP
+In many real time scenario, we don't know these transition probabilities. Especially in dynamic scenarios like traffic behavior, action's outcome is difficult to be modeled. So the question comes up, if we can do something better than traditional MDP, by dealing with model free approaches. What this means is that we refuse to assume anything about outcome of an action from a given state. The obvious question is that how do we learn in such scenarios? Our dear rat is getting bored by watching so many equations, so he decided to stop all this mathematics, and just goes to collect cheese the way he knowns. Of course, he has bruises and burns, but he keeps unrolling his episodes of cheese finding skills. We are going to use the same approach by dropping all this assumption business and directly learn from episodes of exploration(greedy or otherwise).
+
+> Curtain(S) $\rightarrow$ jump(A) $\rightarrow$ knee-injury(R)  $\rightarrow$ ground(S) $\rightarrow$ run(A) $\rightarrow$ $\cdots$
+
+
+### Model Free RL Approaches
+
+
+
+*Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. (Serious about being not-soo-serious). He believes that he has magical powers to transform nerdy topics into town gossip.*
 
 
 {% comment %} 

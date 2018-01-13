@@ -84,25 +84,34 @@ a {
  * Blockquotes
  */
 blockquote {
+  background-color: gainsboro;
   border-left: 4px solid #e8e8e8;
   padding: 15px;
   border-right: 10px solid white;
   border-left: 10px solid white;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 18px;
   letter-spacing: -1px; }
   blockquote > :last-child {
     margin-bottom: 0; }
 
 /**
-*
+* Table formatting
 */
 th, td {
   padding: 10px;
   text-align: justify;
   text-align-last: left;
-  background-color: aliceblue;
+  background-color: gainsboro;
   border-right: 10px solid white;
   border-left: 10px solid white; }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px; }
 
 /**
  * Code formatting

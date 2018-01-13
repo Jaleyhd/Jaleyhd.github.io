@@ -30,7 +30,6 @@ a img:focus, a img:hover {
 }
 blockquote {
 	color: rgb(50,50,50);
-	background-color: lightgoldenrodyellow;
 }
 hr.small {
     max-width: 100px;
