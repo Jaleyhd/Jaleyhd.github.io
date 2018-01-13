@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-12T21:09:32+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing Reinforcement Learning</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing Reinforcement Learning" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-13T06:35:37+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing RL</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing RL" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h1 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h1&gt;
 &lt;p&gt;When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its &lt;strong&gt;Dynamic Programming&lt;/strong&gt;. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.&lt;/p&gt;
 
 &lt;p&gt;In Reinforcement Learning, the substructures are subsolutions. 
@@ -135,11 +135,48 @@ If we make $\gamma = 1$, then we make the reward as sum of all future rewards it
   &lt;p&gt;Note that there is a problem with keeping $\gamma = 1$, In case there are loops in the state transition (i.e, loop means it can come back to the same state again for any state), than it give unstable and inaccurate values.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;learning-policy&quot;&gt;Learning Policy&lt;/h1&gt;
+&lt;h2 id=&quot;learning-policy&quot;&gt;Learning Policy&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/img/ratinmap.png&quot; alt=&quot;Rat in Map&quot; /&gt;&lt;/p&gt;
 
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\pi (s) : S \rightarrow A&lt;/script&gt;
+
 &lt;p&gt;Our dear rat, is on a mission to discover most rewarding path to cheese. He can either climb up through the curtains and jump on kitchen floor, or he can climb via plants in balcony and enter kitchen from window. To learn the most optimal policy is rat’s goal, and is also the goal of Reinforcement Learning. A policy charts out the action to be taken in a given state. Think of it like SIRI in navigation. At each turn(state), SIRI tells you the next best action.&lt;/p&gt;
+
+&lt;p&gt;In the next section,  we will learn bellman equations for  Value Iteration as a way of getting best policy.&lt;/p&gt;
+
+&lt;h2 id=&quot;bellman-equations&quot;&gt;Bellman Equations&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Bellman Optimality Equation for Value Iteration&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;If you can see, the above thug life image of our rat, he is currently in state S1, and we need to find a way to update its state values.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V^{(i+1)}(s_1) \leftarrow R_0 + \gamma \underbrace{max}_{s \in \{s_1,s_2\}} V^{(i)}(s)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\pi^{(i+1)}(s_1) = \text{action}\in \{ a_1,a_2 \} \text{ with max future value } \{ V(s_1),V(s_2) \}&lt;/script&gt;
+
+&lt;p&gt;It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Algorithm-1 (Value Iteration)&lt;br /&gt;
+Initialize V(s) $\forall s \in S$&lt;br /&gt;
+&lt;strong&gt;while&lt;/strong&gt; values converge:&lt;br /&gt;
+    hello&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Tables&lt;/th&gt;
+      &lt;th&gt;Are&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.&lt;/td&gt;
+      &lt;td&gt;It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Why is RL a Game Changer? When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its Dynamic Programming. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.</summary></entry><entry><title type="html">Topic Modelling</title><link href="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Topic Modelling" /><published>2018-01-08T19:20:38+05:30</published><updated>2018-01-08T19:20:38+05:30</updated><id>http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html">&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
 

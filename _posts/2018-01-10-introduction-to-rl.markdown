@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deconstructing Reinforcement Learning"
+title:  "Deconstructing RL"
 subtitle: "Its all about policy"
 date:   2018-01-09 20:15:00 +0530
 comments: true
@@ -37,7 +37,7 @@ Remy the rat is the best example of RL Agent, trying to discover optimal way of 
 **Action** $(A_t)$ : Agent's choices in a given state. For example taking left turn, taking right turn, applying break, etc can be considered actions while driving a car. 
 
 
-**Reward** $(R_t)$ : Reward is the incentive given by environment to agent, for taking an action at a given state.
+**Reward** $(R_t)$ : Reward is the incentive given by environment to agent, for taking an action at a given state.  
 
 > Reward is associated with action (at a given state) and not with the state itself. This is a very common conceptual mistake amongst the beginners. 
 
@@ -141,7 +141,7 @@ If we make $\gamma = 1$, then we make the reward as sum of all future rewards it
 
 > Note that there is a problem with keeping $\gamma = 1$, In case there are loops in the state transition (i.e, loop means it can come back to the same state again for any state), than it give unstable and inaccurate values. 
 
-# Learning Policy
+## Learning Policy
 
 ![Rat in Map](/assets/img/ratinmap.png)
 
@@ -151,7 +151,7 @@ Our dear rat, is on a mission to discover most rewarding path to cheese. He can 
 
 In the next section,  we will learn bellman equations for  Value Iteration as a way of getting best policy.
 
-# Bellman Equations  
+## Bellman Equations  
 *Bellman Optimality Equation for Value Iteration*
 
 
@@ -167,6 +167,12 @@ It means we change our policy greedily based on higher Value. Let us say $V(s_1)
 > Initialize V(s) $\forall s \in S$  
 > **while** values converge:  
 > &nbsp;&nbsp;&nbsp;&nbsp;hello
+
+
+| Tables        | Are           | 
+| ------------- |-------------| 
+| It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges.      | It means we change our policy greedily based on higher Value. Let us say $V(s_1)$ is 40, and $V(s_2)$ is 50, then we select action $a_2$ as it leads us to higher value. In short you update Values of states first and then update policy. You keep repeating these steps until the value and policy converges. | 
+
 
 ***Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. He believes that he has magical powers to transform nerdy topics into town gossip.***
 
