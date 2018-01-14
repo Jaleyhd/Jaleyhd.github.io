@@ -113,8 +113,6 @@ It is  The idea of optimality in Markovian processes, specifically Markov Decisi
   <p>If you have mercury thermometers at home for measuring fever, you can observe, how mercury comes to steady state. This can be looked as markov process with single state. However, things can be pretty messed up, in case of pan, where different parts of pan(continuous state) are at different temperature, yet at an equilibrium. To explain such behavior in thermodyamics, we can use Bellman Equations.</p>
 </blockquote>
 
-<p><img src="/assets/img/ratatouillebanner.png" alt="Ratatouille Banner" /></p>
-
 <p>The textbook examples of mouse discovering cheese may seem oversimplified, but it is not. It provides all we need, to define the distressing jargons of RL.</p>
 
 <p>How many of you readers have watched Ratatouile Movie? If you have not, do watch it first, before you read further, because  we will be using life of Chef Remy(the great rat) in the blog to explain Reinforcement Learning is from that movie only. It is strictly non-negotiable prerequisite :p.</p>
@@ -373,6 +371,76 @@ i = 0;<br />
 </blockquote>
 
 <h3 id="model-free-rl-approaches">Model Free RL Approaches</h3>
+<p>Model Free implies we are not having preconceived ideas of environment. The only way to know is to act as stated in the previous paragraph. This means, at any state, we only know what all actions I can take, but don’t know where I will land up in.</p>
+
+<blockquote>
+  <p><strong>Why do we use only action value function in control problem in pure Model Free Approaches ?</strong></p>
+
+  <p>Does the term Model-Free ring a bell? The answer to the question lies in definition of “Model-Free Approaches”. If you don’t know which state you land up in, you cannot update state value Function. Off course you can estimate State value function (estimate, how rewarding a state is), but you can’t use it to decide what action to take. Action values are must for that.</p>
+</blockquote>
+
+<p>This brings us to two major categories in which Model-Free Approaches are divided. Namely Model-Free Prediction and Model-Free Control. If you take analogy of game of thrones, prediction is like telling how rewarding each house(king’s landing, winter-fell) is. This involves state value function estimation. On the other hand, control problem involves finding out what action should be performed from a given state, such as taking a ride on dragon, going through white harbor in ship,etc. This involves knowing action values.<br />
+So, if you want to apply RL in real world, you should first identify it’s components as prediction or control problem. If you don’t have this clarity, than you will get confused, as to what needs to be applied.</p>
+
+<blockquote>
+  <p><strong>What is Episode ? Can we learn for never-ending run ?</strong><br />
+Episode is agent’s historic information from start to terminal state. Video games are closer to the meaning, wherein you have Super-Mario going from start to the palace. 
+Can we learn without terminal states(non-episodic RL problems)? Answer is yes (that’s precisely why we have TD Update), this can be done if the there are immediate rewards and penalty given in the environment, not just on reaching terminal state (which may not be present).</p>
+</blockquote>
+
+<h4 id="monte-carlo-policy-evaluation">Monte Carlo Policy Evaluation</h4>
+<p>Let us say you are playing a video-game with different states like farm, sea, island, forest, etc. You need to give ranking to these states based on danger. How will you do this?</p>
+<blockquote>
+  <p>Farm $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead<br />
+Sea $\rightarrow$  Island $\rightarrow$ Forest $\rightarrow$ Mountain $\rightarrow$ Forest $\rightarrow$ Dead<br />
+Forest $\rightarrow$ Sea $\rightarrow$  Island $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead</p>
+</blockquote>
+
+<p>As you can see that death is always preceded by forest. This means forest is definitely dangerous. This intuition can be mathematically thought by MC Updates.</p>
+
+<h4 id="temporal-difference-policy-evaluation">Temporal Difference Policy Evaluation</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Monte Carlo Updates</th>
+      <th>Temporal Difference Updates</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>| Model-Free Prediction | Model-Free Control |
+|———————- | —————— |</p>
+
+<h2 id="policy-gradient-methods">Policy Gradient Methods</h2>
+<p>Unlike previously learned approaches, Policy gradients don’t learn q values. They directly learn policy which more obvious choice. Learning policy mean’s learning which action to take. The biggest disadvantage of Deep Q Learning was that it was complicating the problem of learning a policy by adding additional constaint of learning manifold of action values, which doesn’t converge easily in many cases.</p>
+
+<blockquote>
+  <p><strong>Read this Karapathy’s Blog on PG Methods</strong><br />
+I generally don’t like to detour readers with blog links. But the simplicity of blog allows me to skip introduction of PG Approaches quite efficiently. This blog is perfect intro to Policy Gradient Approaches. <br />
+ <a href="http://karpathy.github.io/2016/05/31/rl/">http://karpathy.github.io/2016/05/31/rl/</a></p>
+</blockquote>
+
+<p>If you have read the above blogs, then you should have understood the intuition behind P.G Approach. The difficult with such a model is that, for more complex scenarios, it fails to build an intuition about state representation itself as a mean to explore and learn intelligently. This calls for actor-critic methods where critic is doing state value estimation and actor is taking a call from critic as to how good was its action in current state.<br />
+  <br />
+  </p>
+<h3 id="advantage-actor-critic-a2c">Advantage Actor Critic (A2C)</h3>
+<p>  <br />
+  <br />
+  </p>
+
+<p><img src="/assets/img/actorcritic.png" alt="Director-Actor Analogy" /></p>
+
+<p>  <br />
+  </p>
+
+<p>Remy, the rat has decided to get away from rat-race and try his luck in acting. Turns out that he has some amazing skills, but the director is quite critical about the role. He keeps instructing remy as to how to act in this situation(aka state). This director is learning how each situation/state will be (with respect to remy), and it keeps modifying based on acting skills and performance of remy in different situation/states. Actor-Critic Methods are just like rat-director pair, where director/critic estimates how good a state is (w.r.t remy’s acting) and actor improves the policy(action to take) based on positive/negetive feedback from director. If the director gives angry expressions( negetive advantage) , he looses the confidence(positive gradient descent) in his policy, and tries to choose different action. But if director is happy, he strengthens his action for current scene.</p>
 
 <p><em>Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. (Serious about being not-soo-serious). He believes that he has magical powers to transform nerdy topics into town gossip.</em></p>
 
