@@ -257,7 +257,62 @@ Let us say you are playing a video-game with different states like farm, sea, is
 
 As you can see that death is always preceded by forest. This means forest is definitely dangerous. This intuition can be mathematically thought by MC Updates.
 
+![ Monte Carlo Update ](/assets/img/montecarloupdate.gif)
+
+In the above image, you have visited the farm two times(N=2). and each time you have some discounted reward$(G_1,G_2)$. Then monte carlo estimation for that state will be $(G_1+G_2)/2$. It is that simple.  
+  
+We keep maintaining the discounted Reward sum ($S(s)$) and total visit count ($N(s)$) for each state and find the average discounted reward($S(s)/N(s)$). That's what Monte Carlo Algorithm is.
+
+![ Monte Carlo Algorithm ](/assets/img/montecarloalgo.png)
+
+We can get rid of N(s) by one simple trick. That is by using ***Moving Average***.  This means, let us update the V(s) by moving $\alpha$ percentile in the direction of difference $(G_t-V(s))$.  
+
+$$V(s) = V(s) + \alpha\overbrace{(G(s)-V(s))}^{\Delta V(s)}$$  
+
+$$V(s) = \alpha G(s) + (1-\alpha )V(s)$$ 
+
+Do you find any limitations of this approach?  
+* First of all, The updates are only possible when the episode ends.  
+* It needs to keep a huge backup(non-deterministic length), if the episode is very long. This can be a problem in multi-agent scenario.  
+* Cannot work for never-ending learning scenarios. The episodic nature of problem is must, unless you have approximations to this algorithm. 
+
+
+If you are alert, one question which is likely to pop up in your head is that , do we need 100 or 1000 states ahead of me to evaluate $G_t(s)$? can we limit $G_t(s)$ ?  This very question brings us to a better mechanism of policy evaluation called Temporal Difference Updates. 
+
+
 #### Temporal Difference Policy Evaluation
+
+As we observed earlier, Remy has very small short-term memory. Can we somehow require lesser terms to evaluate $G_t(s)$ ?
+
+$$G_t(s_t) = R_{t+1}+\gamma R_{t+2}+ \gamma^{T-2}\cdots R_{T-1} $$
+
+We can write reward for next state as 
+
+$$G_{t+1}(s_{t+1}) = R_{t+2}+\gamma R_{t+3}+ \gamma^{T-3}\cdots R_{T-1} $$
+
+Therefore we can also write the first equation as 
+
+$$G_t(s_t) = R_{t+1}+\gamma \overbrace {\left\lbrace R_{t+2}+ \gamma^{T-3}\cdots R_{T-1} \right\rbrace}^{G_{t+1}(s_{t+1})} $$
+
+and we all know we want to update value function, closer to discounted reward $(G\leftarrow V)$, therefore our new update for TD Learning becomes 
+
+$$V(s_t)= V(s)+\alpha(\hat{G_t}-V(s))$$
+
+$$V(s_t)= V(s_t)+\alpha(R_{t+1}+\gamma V(s_{t+1})-V(s_t))$$
+
+where we are approximating the  discounted reward $(G_t)$ with $R_{t+1}+\gamma V(s_{t+1})$. This approach updates the value just after the agent moves out into next state. It requires only single state backup and can be useful. This is very obvious alternative to Monte-Carlo updates which require complete episode info for updating the state value function.
+
+![ Temporal Difference Updates ](/assets/img/td-update.png)
+
+In both the approaches we have only looked into, how to evaluate a policy. But the more important task for RL is to learn a policy. This requires us to meddle with Q values of action. 
+  
+&nbsp;&nbsp;  
+&nbsp;&nbsp;  
+
+### Model Free Control
+&nbsp;&nbsp;  
+
+
 
 
 | Monte Carlo Updates | Temporal Difference Updates |
@@ -290,7 +345,7 @@ If you have read the above blogs, then you should have understood the intuition 
 &nbsp;&nbsp;  
 &nbsp;&nbsp;  
 
-Remy, the rat has decided to get away from rat-race and try his luck in acting. Turns out that he has some amazing skills, but the director is quite critical about the role. He keeps instructing remy as to how to act in this situation(aka state). This director is learning how each situation/state will be (with respect to remy), and it keeps modifying based on acting skills and performance of remy in different situation/states. Actor-Critic Methods are just like rat-director pair, where director/critic estimates how good a state is (w.r.t remy's acting) and actor improves the policy(action to take) based on positive/negetive feedback from director. If the director gives angry expressions( negetive advantage) , he looses the confidence(positive gradient descent) in his policy, and tries to choose different action. But if director is happy, he strengthens his action for current scene.
+Remy, the rat has decided to get away from rat-race and try his luck in acting. Turns out that he has some amazing skills, but the director is quite critical about the role. He keeps instructing Remy as to how to act in this situation(aka state). This director is learning how each situation/state will be (with respect to Remy), and it keeps modifying based on acting skills and performance of Remy in different situation/states. Actor-Critic Methods are just like rat-director pair, where director/critic estimates how good a state is (w.r.t remy's acting) and actor improves the policy(action to take) based on positive/negative feedback from director. If the director gives angry expressions( negative advantage) , he looses the confidence(positive gradient descent) in his policy, and tries to choose different action. But if director is happy, he strengthens his action for current scene.
 
 
 

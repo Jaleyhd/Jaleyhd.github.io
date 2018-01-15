@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-13T22:50:05+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing RL</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing RL" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h2 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-15T17:17:10+05:30</updated><id>http://localhost:4000/</id><title type="html">CrazyMuse</title><subtitle>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</subtitle><entry><title type="html">Deconstructing RL</title><link href="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html" rel="alternate" type="text/html" title="Deconstructing RL" /><published>2018-01-09T20:15:00+05:30</published><updated>2018-01-09T20:15:00+05:30</updated><id>http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl</id><content type="html" xml:base="http://localhost:4000/reinforcement-learning/2018/01/09/introduction-to-rl.html">&lt;h2 id=&quot;why-is-rl-a-game-changer&quot;&gt;Why is RL a Game Changer?&lt;/h2&gt;
 &lt;p&gt;When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its &lt;strong&gt;Dynamic Programming&lt;/strong&gt;. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.&lt;/p&gt;
 
 &lt;p&gt;In Reinforcement Learning, the substructures are subsolutions. 
@@ -7,8 +7,6 @@ It is  The idea of optimality in Markovian processes, specifically Markov Decisi
 &lt;blockquote&gt;
   &lt;p&gt;If you have mercury thermometers at home for measuring fever, you can observe, how mercury comes to steady state. This can be looked as markov process with single state. However, things can be pretty messed up, in case of pan, where different parts of pan(continuous state) are at different temperature, yet at an equilibrium. To explain such behavior in thermodyamics, we can use Bellman Equations.&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/ratatouillebanner.png&quot; alt=&quot;Ratatouille Banner&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The textbook examples of mouse discovering cheese may seem oversimplified, but it is not. It provides all we need, to define the distressing jargons of RL.&lt;/p&gt;
 
@@ -268,6 +266,129 @@ i = 0;&lt;br /&gt;
 &lt;/blockquote&gt;
 
 &lt;h3 id=&quot;model-free-rl-approaches&quot;&gt;Model Free RL Approaches&lt;/h3&gt;
+&lt;p&gt;Model Free implies we are not having preconceived ideas of environment. The only way to know is to act as stated in the previous paragraph. This means, at any state, we only know what all actions I can take, but don’t know where I will land up in.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Why do we use only action value function in control problem in pure Model Free Approaches ?&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;Does the term Model-Free ring a bell? The answer to the question lies in definition of “Model-Free Approaches”. If you don’t know which state you land up in, you cannot update state value Function. Off course you can estimate State value function (estimate, how rewarding a state is), but you can’t use it to decide what action to take. Action values are must for that.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This brings us to two major categories in which Model-Free Approaches are divided. Namely Model-Free Prediction and Model-Free Control. If you take analogy of game of thrones, prediction is like telling how rewarding each house(king’s landing, winter-fell) is. This involves state value function estimation. On the other hand, control problem involves finding out what action should be performed from a given state, such as taking a ride on dragon, going through white harbor in ship,etc. This involves knowing action values.&lt;br /&gt;
+So, if you want to apply RL in real world, you should first identify it’s components as prediction or control problem. If you don’t have this clarity, than you will get confused, as to what needs to be applied.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;What is Episode ? Can we learn for never-ending run ?&lt;/strong&gt;&lt;br /&gt;
+Episode is agent’s historic information from start to terminal state. Video games are closer to the meaning, wherein you have Super-Mario going from start to the palace. 
+Can we learn without terminal states(non-episodic RL problems)? Answer is yes (that’s precisely why we have TD Update), this can be done if the there are immediate rewards and penalty given in the environment, not just on reaching terminal state (which may not be present).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;monte-carlo-policy-evaluation&quot;&gt;Monte Carlo Policy Evaluation&lt;/h4&gt;
+&lt;p&gt;Let us say you are playing a video-game with different states like farm, sea, island, forest, etc. You need to give ranking to these states based on danger. How will you do this?&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Farm $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead&lt;br /&gt;
+Sea $\rightarrow$  Island $\rightarrow$ Forest $\rightarrow$ Mountain $\rightarrow$ Forest $\rightarrow$ Dead&lt;br /&gt;
+Forest $\rightarrow$ Sea $\rightarrow$  Island $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As you can see that death is always preceded by forest. This means forest is definitely dangerous. This intuition can be mathematically thought by MC Updates.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/montecarloupdate.gif&quot; alt=&quot; Monte Carlo Update &quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the above image, you have visited the farm two times(N=2). and each time you have some discounted reward$(G_1,G_2)$. Then monte carlo estimation for that state will be $(G_1+G_2)/2$. It is that simple.&lt;/p&gt;
+
+&lt;p&gt;We keep maintaining the discounted Reward sum ($S(s)$) and total visit count ($N(s)$) for each state and find the average discounted reward($S(s)/N(s)$). That’s what Monte Carlo Algorithm is.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/montecarloalgo.png&quot; alt=&quot; Monte Carlo Algorithm &quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can get rid of N(s) by one simple trick. That is by using &lt;strong&gt;&lt;em&gt;Moving Average&lt;/em&gt;&lt;/strong&gt;.  This means, let us update the V(s) by moving $\alpha$ percentile in the direction of difference $(G_t-V(s))$.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V(s) = V(s) + \alpha\overbrace{(G(s)-V(s))}^{\Delta V(s)}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V(s) = \alpha G(s) + (1-\alpha )V(s)&lt;/script&gt;
+
+&lt;p&gt;Do you find any limitations of this approach?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;First of all, The updates are only possible when the episode ends.&lt;/li&gt;
+  &lt;li&gt;It needs to keep a huge backup(non-deterministic length), if the episode is very long. This can be a problem in multi-agent scenario.&lt;/li&gt;
+  &lt;li&gt;Cannot work for never-ending learning scenarios. The episodic nature of problem is must, unless you have approximations to this algorithm.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you are alert, one question which is likely to pop up in your head is that , do we need 100 or 1000 states ahead of me to evaluate $G_t(s)$? can we limit $G_t(s)$ ?  This very question brings us to a better mechanism of policy evaluation called Temporal Difference Updates.&lt;/p&gt;
+
+&lt;h4 id=&quot;temporal-difference-policy-evaluation&quot;&gt;Temporal Difference Policy Evaluation&lt;/h4&gt;
+
+&lt;p&gt;As we observed earlier, Remy has very small short-term memory. Can we somehow require lesser terms to evaluate $G_t(s)$ ?&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;G_t(s_t) = R_{t+1}+\gamma R_{t+2}+ \gamma^{T-2}\cdots R_{T-1}&lt;/script&gt;
+
+&lt;p&gt;We can write reward for next state as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;G_{t+1}(s_{t+1}) = R_{t+2}+\gamma R_{t+3}+ \gamma^{T-3}\cdots R_{T-1}&lt;/script&gt;
+
+&lt;p&gt;Therefore we can also write the first equation as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;G_t(s_t) = R_{t+1}+\gamma \overbrace {\left\lbrace R_{t+2}+ \gamma^{T-3}\cdots R_{T-1} \right\rbrace}^{G_{t+1}(s_{t+1})}&lt;/script&gt;
+
+&lt;p&gt;and we all know we want to update value function, closer to discounted reward $(G\leftarrow V)$, therefore our new update for TD Learning becomes&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V(s_t)= V(s)+\alpha(\hat{G_t}-V(s))&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V(s_t)= V(s_t)+\alpha(R_{t+1}+\gamma V(s_{t+1})-V(s_t))&lt;/script&gt;
+
+&lt;p&gt;where we are approximating the  discounted reward $(G_t)$ with $R_{t+1}+\gamma V(s_{t+1})$. This approach updates the value just after the agent moves out into next state. It requires only single state backup and can be useful. This is very obvious alternative to Monte-Carlo updates which require complete episode info for updating the state value function.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/td-update.png&quot; alt=&quot; Temporal Difference Updates &quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In both the approaches we have only looked into, how to evaluate a policy. But the more important task for RL is to learn a policy. This requires us to meddle with Q values of action.&lt;/p&gt;
+
+&lt;p&gt;  &lt;br /&gt;
+  &lt;/p&gt;
+
+&lt;h3 id=&quot;model-free-control&quot;&gt;Model Free Control&lt;/h3&gt;
+&lt;p&gt;  &lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Monte Carlo Updates&lt;/th&gt;
+      &lt;th&gt;Temporal Difference Updates&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;a&lt;/td&gt;
+      &lt;td&gt;b&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;| Model-Free Prediction | Model-Free Control |
+|———————- | —————— |&lt;/p&gt;
+
+&lt;h2 id=&quot;policy-gradient-methods&quot;&gt;Policy Gradient Methods&lt;/h2&gt;
+&lt;p&gt;Unlike previously learned approaches, Policy gradients don’t learn q values. They directly learn policy which more obvious choice. Learning policy mean’s learning which action to take. The biggest disadvantage of Deep Q Learning was that it was complicating the problem of learning a policy by adding additional constaint of learning manifold of action values, which doesn’t converge easily in many cases.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Read this Karapathy’s Blog on PG Methods&lt;/strong&gt;&lt;br /&gt;
+I generally don’t like to detour readers with blog links. But the simplicity of blog allows me to skip introduction of PG Approaches quite efficiently. This blog is perfect intro to Policy Gradient Approaches. &lt;br /&gt;
+ &lt;a href=&quot;http://karpathy.github.io/2016/05/31/rl/&quot;&gt;http://karpathy.github.io/2016/05/31/rl/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If you have read the above blogs, then you should have understood the intuition behind P.G Approach. The difficult with such a model is that, for more complex scenarios, it fails to build an intuition about state representation itself as a mean to explore and learn intelligently. This calls for actor-critic methods where critic is doing state value estimation and actor is taking a call from critic as to how good was its action in current state.&lt;br /&gt;
+  &lt;br /&gt;
+  &lt;/p&gt;
+&lt;h3 id=&quot;advantage-actor-critic-a2c&quot;&gt;Advantage Actor Critic (A2C)&lt;/h3&gt;
+&lt;p&gt;  &lt;br /&gt;
+  &lt;br /&gt;
+  &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/actorcritic.png&quot; alt=&quot;Director-Actor Analogy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;  &lt;br /&gt;
+  &lt;/p&gt;
+
+&lt;p&gt;Remy, the rat has decided to get away from rat-race and try his luck in acting. Turns out that he has some amazing skills, but the director is quite critical about the role. He keeps instructing Remy as to how to act in this situation(aka state). This director is learning how each situation/state will be (with respect to Remy), and it keeps modifying based on acting skills and performance of Remy in different situation/states. Actor-Critic Methods are just like rat-director pair, where director/critic estimates how good a state is (w.r.t remy’s acting) and actor improves the policy(action to take) based on positive/negative feedback from director. If the director gives angry expressions( negative advantage) , he looses the confidence(positive gradient descent) in his policy, and tries to choose different action. But if director is happy, he strengthens his action for current scene.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Jaley is a storyteller, meme-maker, and so called data scientist, who is too hippy to be serious about anything. (Serious about being not-soo-serious). He believes that he has magical powers to transform nerdy topics into town gossip.&lt;/em&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Why is RL a Game Changer? When you start binge watching David Silver RL Lectures on a bright Saturday Morning, its hard to not think that there is a whole world out there yet to be explored. Reinforcement Learning is not a new concept. In 1950’s Richard Bellman was working hard to explain behavior of time-dynamic systems. He became father of what can be considered a remarkable problem-solving techinique, which is quite popular amongst CS-Algo students. Its Dynamic Programming. It is most clever way of reusing computations of optimal substructures, for example in Knapsack Problem.</summary></entry><entry><title type="html">Topic Modelling</title><link href="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Topic Modelling" /><published>2018-01-08T19:20:38+05:30</published><updated>2018-01-08T19:20:38+05:30</updated><id>http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/01/08/welcome-to-jekyll.html">&lt;p&gt;Imagine that, its early morning and you are reading newspaper just dropped by delivery guy. Now while sipping a hot cup of tea, you get an idea. Why can’t I organize the articles by cool ML Techinques? The Caffaine pumped man, goes online, collects all Newspaper articles and wants them to be grouped. Thats where LDA comes as a savior. In this case, a newspaper article is document (for LDA) and what we want to do is assign a topic to each of the document. For example ‘Novak Djokovic’ retiring comes under Sports section and ‘Hillary vs Trump’ comes under politics section.&lt;/p&gt;
 
