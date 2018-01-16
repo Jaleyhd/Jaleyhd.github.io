@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Reinforcement Learing "
+title:  "Getting rid of environment"
 subtitle: "Deep RL Tutorial part-3"
 date:   2018-01-12 20:15:00 +0530
 comments: true
