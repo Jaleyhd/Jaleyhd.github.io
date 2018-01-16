@@ -54,7 +54,7 @@ What is the simplest policy can follow in any environment? Well, we can just loo
 ## Markov Chain
 ![Cupcake Markov Chain](/assets/img/cupcakemarkovchain.png)
 
-In 2 broke girls, do you know why the cupcake business kick-started by X and Y did not take off? Well, its because they didn't meet pal of Z from Russia. Ya, you guessed it, Its Markov. Had they met Markov, he would have explained how customers are eating cupcakes. 
+In Two broke girls, do you know why the cupcake business kick-started by Max and Caroline did not take off? Well, its because they didn't meet pal of Oleg from Russia. Ya, you guessed it, its Markov. Had they met Markov, he would have explained how customers are eating cupcakes. 
 
 Now strawberry cupcake tastes great, but you are unlikely to get addicted to it, on the other hand, chocolate cupcakes, just hit the right spot in brain, releasing all endorphins. Therefore, you will keep buying chocolate cupcakes again and again.
 
