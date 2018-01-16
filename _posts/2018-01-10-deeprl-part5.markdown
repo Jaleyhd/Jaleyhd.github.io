@@ -1,11 +1,13 @@
 ---
 layout: post
-title:  "Deconstructing RL"
-subtitle: "Deep RL Tutorial Part-1"
+title:  "Reinforcement Learing "
+subtitle: "Deep RL Blog Series part-1"
 date:   2018-01-09 20:15:00 +0530
 comments: true
+permalink : /deeprltutorial/part2/
+published: false
 categories: reinforcement-learning
-description: "In this blog, we talk about creating ground Zero for understanding RL. We intend to use his as a base to learn more RL Techniques in the subsequent blogs"
+description: "In this blog, we talk about creating ground Zero for understanding RL. We intend to use his as a base to learn more RL Techniques in the subsequent blogs where we will be doing cool stuff like training Atari Games"
 ---
 
 ## Why is RL a Game Changer?
@@ -139,6 +141,7 @@ If we make $\gamma = 1$, then we make the reward as sum of all future rewards it
 
 
 > Note that there is a problem with keeping $\gamma = 1$, In case there are loops in the state transition (i.e, loop means it can come back to the same state again for any state), than it give unstable and inaccurate values. 
+
 
 ## Learning Policy
 

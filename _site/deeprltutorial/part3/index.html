@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reinforcement Learing </title>
+  <link href="/assets/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/main.css" rel="stylesheet">
+
+  <meta name="description" content="Model Free RL Approaches Model Free implies we are not having preconceived ideas of environment. The only way to know is to act as stated in the previous par...">
+
+  <link rel="stylesheet" href="/assets/clean-blog.min.css" rel="stylesheet">
+  <link rel="canonical" href="http://localhost:4000/deeprltutorial/part3/">
+  <link rel="alternate" type="application/rss+xml" title="CrazyMuse" href="/feed.xml">
+  <link href="/assets/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+  <script src="/assets/jquery-min.js"></script>
+    <script src="/assets/d3-min.js"></script>
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+  </script>
+  <script src="/assets/bootstrap.min.js"></script>
+
+  <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script src="/assets/clean-blog.min.js"></script>
+  <script src="/assets/blog1.js"></script>
+
+  
+</head>
+<body>
+      <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="https://www.github.com/jaleyhd">Crazy Muse</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href=http://localhost:4000/index.html >Home</a>
+                    </li>
+                    <li>
+                        <a href=http://localhost:4000/about/index.html >About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</body>
+
+  <body>
+
+        <header class="intro-header" style="background-image: url('/assets/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        
+                        <h1>Reinforcement Learing </h1>
+                        
+                        
+                        <h3><i>Deep RL Tutorial part-3</i></h3>
+                        
+
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <p class="post-meta">
+      <time datetime="2018-01-12T20:15:00+05:30" itemprop="datePublished">
+        
+        Jan 12, 2018
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h3 id="model-free-rl-approaches">Model Free RL Approaches</h3>
+<p>Model Free implies we are not having preconceived ideas of environment. The only way to know is to act as stated in the previous paragraph. This means, at any state, we only know what all actions I can take, but don’t know where I will land up in.</p>
+
+<blockquote>
+  <p><strong>Why do we use only action value function in control problem in pure Model Free Approaches ?</strong></p>
+
+  <p>Does the term Model-Free ring a bell? The answer to the question lies in definition of “Model-Free Approaches”. If you don’t know which state you land up in, you cannot update state value Function. Off course you can estimate State value function (estimate, how rewarding a state is), but you can’t use it to decide what action to take. Action values are must for that.</p>
+</blockquote>
+
+<p>This brings us to two major categories in which Model-Free Approaches are divided. Namely Model-Free Prediction and Model-Free Control. If you take analogy of game of thrones, prediction is like telling how rewarding each house(king’s landing, winter-fell) is. This involves state value function estimation. On the other hand, control problem involves finding out what action should be performed from a given state, such as taking a ride on dragon, going through white harbor in ship,etc. This involves knowing action values.<br />
+So, if you want to apply RL in real world, you should first identify it’s components as prediction or control problem. If you don’t have this clarity, than you will get confused, as to what needs to be applied.</p>
+
+<blockquote>
+  <p><strong>What is Episode ? Can we learn for never-ending run ?</strong><br />
+Episode is agent’s historic information from start to terminal state. Video games are closer to the meaning, wherein you have Super-Mario going from start to the palace. 
+Can we learn without terminal states(non-episodic RL problems)? Answer is yes (that’s precisely why we have TD Update), this can be done if the there are immediate rewards and penalty given in the environment, not just on reaching terminal state (which may not be present).</p>
+</blockquote>
+
+<h4 id="monte-carlo-policy-evaluation">Monte Carlo Policy Evaluation</h4>
+<p>Let us say you are playing a video-game with different states like farm, sea, island, forest, etc. You need to give ranking to these states based on danger. How will you do this?</p>
+<blockquote>
+  <p>Farm $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead<br />
+Sea $\rightarrow$  Island $\rightarrow$ Forest $\rightarrow$ Mountain $\rightarrow$ Forest $\rightarrow$ Dead<br />
+Forest $\rightarrow$ Sea $\rightarrow$  Island $\rightarrow$ Sea $\rightarrow$ Island $\rightarrow$ Forest $\rightarrow$ Dead</p>
+</blockquote>
+
+<p>As you can see that death is always preceded by forest. This means forest is definitely dangerous. This intuition can be mathematically thought by MC Updates.</p>
+
+<p><img src="/assets/img/montecarloupdate.gif" alt=" Monte Carlo Update " /></p>
+
+<p>In the above image, you have visited the farm two times(N=2). and each time you have some discounted reward$(G_1,G_2)$. Then monte carlo estimation for that state will be $(G_1+G_2)/2$. It is that simple.</p>
+
+<p>We keep maintaining the discounted Reward sum ($S(s)$) and total visit count ($N(s)$) for each state and find the average discounted reward($S(s)/N(s)$). That’s what Monte Carlo Algorithm is.</p>
+
+<p><img src="/assets/img/montecarloalgo.png" alt=" Monte Carlo Algorithm " /></p>
+
+<p>We can get rid of N(s) by one simple trick. That is by using <strong><em>Moving Average</em></strong>.  This means, let us update the V(s) by moving $\alpha$ percentile in the direction of difference $(G_t-V(s))$.</p>
+
+<script type="math/tex; mode=display">V(s) = V(s) + \alpha\overbrace{(G(s)-V(s))}^{\Delta V(s)}</script>
+
+<script type="math/tex; mode=display">V(s) = \alpha G(s) + (1-\alpha )V(s)</script>
+
+<p>Do you find any limitations of this approach?</p>
+<ul>
+  <li>First of all, The updates are only possible when the episode ends.</li>
+  <li>It needs to keep a huge backup(non-deterministic length), if the episode is very long. This can be a problem in multi-agent scenario.</li>
+  <li>Cannot work for never-ending learning scenarios. The episodic nature of problem is must, unless you have approximations to this algorithm.</li>
+</ul>
+
+<p>If you are alert, one question which is likely to pop up in your head is that , do we need 100 or 1000 states ahead of me to evaluate $G_t(s)$? can we limit $G_t(s)$ ?  This very question brings us to a better mechanism of policy evaluation called Temporal Difference Updates.</p>
+
+<h4 id="temporal-difference-policy-evaluation">Temporal Difference Policy Evaluation</h4>
+
+<p>As we observed earlier, Remy has very small short-term memory. Can we somehow require lesser terms to evaluate $G_t(s)$ ?</p>
+
+<script type="math/tex; mode=display">G_t(s_t) = R_{t+1}+\gamma R_{t+2}+ \gamma^{T-2}\cdots R_{T-1}</script>
+
+<p>We can write reward for next state as</p>
+
+<script type="math/tex; mode=display">G_{t+1}(s_{t+1}) = R_{t+2}+\gamma R_{t+3}+ \gamma^{T-3}\cdots R_{T-1}</script>
+
+<p>Therefore we can also write the first equation as</p>
+
+<script type="math/tex; mode=display">G_t(s_t) = R_{t+1}+\gamma \overbrace {\left\lbrace R_{t+2}+ \gamma^{T-3}\cdots R_{T-1} \right\rbrace}^{G_{t+1}(s_{t+1})}</script>
+
+<p>and we all know we want to update value function, closer to discounted reward $(G\leftarrow V)$, therefore our new update for TD Learning becomes</p>
+
+<script type="math/tex; mode=display">V(s_t)= V(s)+\alpha(\hat{G_t}-V(s))</script>
+
+<script type="math/tex; mode=display">V(s_t)= V(s_t)+\alpha(R_{t+1}+\gamma V(s_{t+1})-V(s_t))</script>
+
+<p>where we are approximating the  discounted reward $(G_t)$ with $R_{t+1}+\gamma V(s_{t+1})$. This approach updates the value just after the agent moves out into next state. It requires only single state backup and can be useful. This is very obvious alternative to Monte-Carlo updates which require complete episode info for updating the state value function.</p>
+
+<p><img src="/assets/img/td-update.png" alt=" Temporal Difference Updates " /></p>
+
+<p>In both the approaches we have only looked into, how to evaluate a policy. But the more important task for RL is to learn a policy. This requires us to meddle with Q values of action.</p>
+
+<p>  <br />
+  </p>
+
+<h3 id="model-free-control">Model Free Control</h3>
+<p>  </p>
+
+  </div>
+
+  
+</article>
+
+ 
+  <div id="disqus_thread"></div>
+  <script>
+
+  var disqus_config = function () {
+  this.page.url = "http://crazymuse.github.io/deeprltutorial/part3/";  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = "/deeprltutorial/part3/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://jaleyhd.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CrazyMuse</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              CrazyMuse
+            
+            </li>
+            
+            <li><a href="mailto:jaley.dholakiya@gmail.com">jaley.dholakiya@gmail.com</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/crazymuse"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">crazymuse</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/jaleyhd"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">jaleyhd</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
