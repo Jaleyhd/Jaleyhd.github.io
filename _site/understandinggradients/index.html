@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Digging deeper into gradients</title>
+  <link href="/assets/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/main.css" rel="stylesheet">
+
+  <meta name="description" content="Demystifying Gradients in CNN">
+
+  <link rel="stylesheet" href="/assets/clean-blog.min.css" rel="stylesheet">
+  <link rel="canonical" href="http://localhost:4000/understandinggradients/">
+  <link rel="alternate" type="application/rss+xml" title="CrazyMuse" href="/feed.xml">
+  <link href="/assets/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+  <script src="/assets/jquery-min.js"></script>
+    <script src="/assets/d3-min.js"></script>
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+  </script>
+  <script src="/assets/bootstrap.min.js"></script>
+
+  <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script src="/assets/clean-blog.min.js"></script>
+  <script src="/assets/blog1.js"></script>
+
+  
+</head>
+<body>
+      <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="https://www.github.com/jaleyhd">Crazy Muse</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href=http://localhost:4000/index.html >Home</a>
+                    </li>
+                    <li>
+                        <a href=http://localhost:4000/about/index.html >About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</body>
+
+  <body>
+
+        <header class="intro-header" style="background-image: url('/assets/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        
+                        <h1>Digging deeper into gradients</h1>
+                        
+                        
+                        <h3><i>NN Basics</i></h3>
+                        
+
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <p class="post-meta">
+      <time datetime="2018-01-15T20:15:00+05:30" itemprop="datePublished">
+        
+        Jan 15, 2018
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h1 id="demystifying-gradients-in-cnn">Demystifying Gradients in CNN</h1>
+
+<p>Gradients are those mysterious creatures found in every nook and corner of intelligent designs. It forms bedrock for all the intelligent systems around. In this blog, we will try and dig deeper into world of gradients ,starting from tiny world of derivatives straight upto how training of CNN is strongly tied with this basic understanding.</p>
+
+<h2 id="derivatives">Derivatives</h2>
+<p>Derivative is nothing but gradient with just one variable. The simplest example is to calculate derivative of $f(x) = 2*x^2 $ with respect to x, and evaluate it for $x=3$. The value of derivative is <script type="math/tex">\lbrack 4*x \rbrack _{(x=3)}=12</script></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span><span class="p">;</span>
+<span class="n">x</span><span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">);</span>
+<span class="n">fx</span> <span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<span class="n">grads</span> <span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">fx</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="mf">3.0</span><span class="p">}))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12.0]
+</code></pre></div></div>
+
+<p>As we can see, tensorflow’s answer matches our high school caluculation of derivates. What if we want to calcuate gradient for multivariate function such as $f(x,y) = 2x^2+3y^2$ w.r.t (x,y)? In this case, it calculates partial derivative of function with respect to each variable and substitute the value.</p>
+
+<script type="math/tex; mode=display">\underbrace{\nabla f(x,y)}_{\text{w.r.t }(x,y)} = \underbrace{\begin{bmatrix} 4x \\ 6y \end{bmatrix} }_{(x=3,y=5)}  = \begin{bmatrix} 12 \\ 30 \end{bmatrix}</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span><span class="p">;</span>
+<span class="n">x</span><span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">);</span>
+<span class="n">y</span><span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">);</span>
+<span class="n">fxy</span> <span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">;</span>
+<span class="n">grads</span> <span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">fxy</span><span class="p">,[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="mf">3.0</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="mf">5.0</span><span class="p">}))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12.0, 30.0]
+</code></pre></div></div>
+
+<p>Also note, that larger the weightage of that term in loss function, the larger will the gradient w.r.t that variable.Let us now see, how gradients work when we have a convolutional layer in CNN.</p>
+
+<h3 id="understanding-gradients-for-convolutional-layers">Understanding Gradients for Convolutional Layers</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Manual Convolution</span>
+<span class="c">#(Assume filter is already flipped)</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span><span class="p">;</span>
+<span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="o">-</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">],</span><span class="n">h</span><span class="p">,</span><span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">))</span>
+<span class="n">grads</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">());</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])}))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])}))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>39.0
+[array([ 7.,  7.,  6.], dtype=float32)]
+</code></pre></div></div>
+
+<h3 id="q--can-you-calculate-this-output">Q ) Can you calculate this output?</h3>
+
+<p>It is pretty simple. Let us say, I want to find gradient for $0^{th}$ multiplier (a.k.a hidden variable). This will be nothing but partial derivative of the output(or reduce sum form of output, if it is not single value) with respect to $h[0]$. <script type="math/tex">\cfrac{\partial (x*h)}{\partial h[0]}</script>
+Looks scary, huh ?
+But explaination can be simplified, if we can write convolution as a matrix operation. (Note : It won’t match with textbook as textbook will have flipped version of it + we have slided the filter, First times, please ignore this note )</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{bmatrix}y[0]\\y[1]\\y[2]\\y[3] \end{bmatrix} = \begin{bmatrix}\textbf{x[0]} & x[1] & x[2] \\ \textbf{x[1]} & x[2] & x[3]  \\ \textbf{x[2]} & x[3] & x[4]  \\ \textbf{x[3]} & x[4] & x[5] \end{bmatrix}\begin{bmatrix}\textbf{h[0]}\\h[1]\\h[2] \end{bmatrix} %]]></script>
+
+<p>On one level, when we say gradient with respect to h[0], what grad for h[0] is saying is that, hey remove all terms that are not multiplied with me, and then sum all that is attached to me.</p>
+
+<p>As I have highlighted, the embolded $[x[0],x[1],x[2],x[3]]$ are the ones, which are multiplied with $h[0]$ in one or the other way. Sum them up, and you get the output of gradient value corrosponding to $h[0]$ ! Simple :)</p>
+
+<h3 id="gradients-for-maxpooling">Gradients for MaxPooling</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Manual Convolution</span>
+<span class="c">#(Assume filter is already flipped)</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span><span class="p">;</span>
+<span class="k">def</span> <span class="nf">pool</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="o">-</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">grads</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">());</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])}))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])}))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.0
+[array([ 0.        ,  0.        ,  3.        ,  0.33333334,  0.33333334,
+        0.33333334], dtype=float32)]
+</code></pre></div></div>
+
+<p>This one is tricky one. Out of all 4 values, it goes and sits out for highest value. Therefore, it leads to loss of information too.</p>
+
+<h2 id="gradient-of-sigmoid-output">Gradient of Sigmoid output</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span><span class="p">;</span>
+<span class="n">x</span><span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">);</span>
+<span class="n">fsigma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="n">frelu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="n">ftanh</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">gradsigma</span> <span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">fsigma</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">gradrelu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">frelu</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">gradtanh</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">ftanh</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span><span class="n">axarr</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">xval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="c"># Gradient Calculation for Sigmoid;</span>
+    <span class="n">gradsigmaval</span><span class="p">,</span><span class="n">sigmaval</span> <span class="o">=</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">gradsigma</span><span class="p">,</span><span class="n">fsigma</span><span class="p">],</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">xval</span><span class="p">}))</span>
+    
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">gradsigmaval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">sigmaval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">"gradient"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"sigmoid"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper right"</span><span class="p">)</span>
+
+    <span class="c"># Gradient Calculation for tanh;</span>
+    <span class="n">gradtanhval</span><span class="p">,</span><span class="n">tanhval</span> <span class="o">=</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">gradtanh</span><span class="p">,</span><span class="n">ftanh</span><span class="p">],</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">xval</span><span class="p">}))</span>
+    
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">gradtanhval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">"tanh"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">tanhval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">"gradient"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"tanh"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper right"</span><span class="p">)</span>
+
+    <span class="c"># Gradient Calculation for relu;</span>
+    <span class="n">xval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">gradreluval</span><span class="p">,</span><span class="n">reluval</span> <span class="o">=</span> <span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">gradrelu</span><span class="p">,</span><span class="n">frelu</span><span class="p">],</span><span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">xval</span><span class="p">}))</span>    
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">gradreluval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">"relu"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">reluval</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s">"gradient"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"relu"</span><span class="p">);</span>
+    <span class="n">axarr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper right"</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">"Graphs describing gradients for various activations"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/jupyter/GradientDescent_files/GradientDescent_12_0.png" alt="png" /></p>
+
+<p><em>Inspired and followed up from Matt Muzer Explaination</em>
+ https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/</p>
+
+
+  </div>
+
+  
+</article>
+
+ 
+  <div id="disqus_thread"></div>
+  <script>
+
+  var disqus_config = function () {
+  this.page.url = "http://crazymuse.github.io/understandinggradients/";  // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = "/understandinggradients/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://jaleyhd.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CrazyMuse</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              CrazyMuse
+            
+            </li>
+            
+            <li><a href="mailto:jaley.dholakiya@gmail.com">jaley.dholakiya@gmail.com</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/crazymuse"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">crazymuse</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/jaleyhd"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">jaleyhd</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Isha Meditator, DeepLearning@Samsung-Harman, Knowledge Farmer, Veggie Chef</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
