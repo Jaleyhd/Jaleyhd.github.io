@@ -186,32 +186,12 @@ hr.small {
     text-decoration: none;
     color: #0085A1;
 }
-.post-preview>a>.post-title {
-    font-size: 30px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-.post-preview>a>.post-subtitle {
-    margin: 0 0 10px;
-    font-weight: 300;
-}
-.post-preview>.post-meta {
-    color: #777;
-    font-size: 18px;
-    font-style: italic;
-    margin-top: 0;
-}
-.post-preview>.post-meta>a {
-    text-decoration: none;
-    color: #333;
-}
 .post-preview>.post-meta>a:focus, .post-preview>.post-meta>a:hover {
     color: #0085A1;
     text-decoration: underline;
 }
 @media only screen and (min-width:768px) {
     .post-preview>a>.post-title {
-    font-size: 36px;
 }
 }.section-heading {
     font-size: 36px;

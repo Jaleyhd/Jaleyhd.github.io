@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Deconstructing RL"
-subtitle: "Deep RL Tutorial Part-1"
+title:  "Reinforcement Learing "
+subtitle: "Deep RL Blog Series part-1"
 date:   2018-01-09 20:15:00 +0530
 comments: true
 categories: reinforcement-learning
