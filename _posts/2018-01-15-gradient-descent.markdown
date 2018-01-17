@@ -4,7 +4,7 @@ title:  "Digging deeper into gradients"
 subtitle: "NN Basics"
 date:   2018-01-15 20:15:00 +0530
 comments: true
-published: true
+published: false
 permalink : /understandinggradients/
 categories: reinforcement-learning
 description: "Gradients are those mysterious creatures found in every nook and corner of intelligent designs. It forms bedrock for all the intelligent systems around. In this blog, we will try and dig deeper into world of gradients ,starting from tiny world of derivatives straight upto how training of CNN is strongly tied with this basic understanding."
