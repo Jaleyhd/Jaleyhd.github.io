@@ -1,14 +1,19 @@
 ---
 layout: page
-title: 
+title: Why Crazymuse ?  
 permalink: /about/
 ---
-### Why Crazymuse ?
-Today, take up any ML course on Internet,  most of them would seem like some scanned copy of dusty book. What's missing, is the language of communicating abstractions in a concept, in form of day to day relatable things. According to studies by \hyperlink{https://hbr.org/2014/10/why-your-brain-loves-good-storytelling}{Paul Zac}, storytelling as a method of communication leads to increased level of oxytocin, a hormone which reduces inhibitory behavior in Humans. In simpler words, it helps you to empetize the concept, and make you feel, as if it's a part of your  body.His research states that character driven stories with emotional content results in better recall. Compelling story or illustration also leads to sustained attaintion and emotional connect. That explains, why you remember and relate to such a complex story plot of game of thrones. This also explains why you create mental blocks for technical content. In crazymuse, we intend to make cheap workshops and free Youtube Content, which is more experiencial, by combining storytelling and problem based approach towards learning a concept. Lets say, we work 80\% as developers in office to gain 20\% experiencial learning, we want to reverse the ratios. We want you don't just read ML, but also breath and feel it. We want to opensource, this collective experience in a relatable way. We also want provide a sustainable monetizing public platform for creative researchers who value beauty in abstractions of a concept more than the number of papers they will publish. 
+Today, take up any ML course on Internet,  most of them would seem like some scanned copy of dusty book. 
+What's missing, is the language of communicating abstractions in a concept, in form of day to day relatable things. 
+According to studies by [Paul Zac](https://hbr.org/2014/10/why-your-brain-loves-good-storytelling), storytelling as a method of communication leads to increased level of oxytocin, a hormone which reduces inhibitory behavior in Humans. In simpler words, it helps you to empetize the concept, and make you feel, as if it's a part of your  body.His research states that character driven stories with emotional content results in better recall. Compelling story or illustration also leads to sustained attaintion and emotional connect. That explains, why you remember and relate to such a complex story plot of game of thrones. This also explains why you create mental blocks for technical content. In crazymuse, we intend to make cheap workshops and free Youtube Content, which is more experiencial, by combining storytelling and problem based approach towards learning a concept. Lets say, we work 80\% as developers in office to gain 20\% experiencial learning, we want to reverse the ratios. We want you don't just read ML, but also breath and feel it. We want to opensource, this collective experience in a relatable way. We also want provide a sustainable monetizing public platform for creative researchers who value beauty in abstractions of a concept more than the number of papers they will publish.  
+  
+
+*Crazymuse word symbolizes "Rhythm of Crazyness". The universe is extremely chaotic, but if you look carefully, there is a rhythm to this madness. Like lissajous figures, beautiful ellipsoid orbits which are always in sync, nature of life around and so on.*
 
 ### Mission
 
-We want fast forward learning process of budding ML enthusiasts and give creative researchers a platform, to express research in ways that we can easily relate to. We want to make "creative abstraction of research experience", the new cool. 
+We want to fast forward learning process of budding ML enthusiasts and give creative researchers a platform, to express research in ways that we can easily relate to. We want to make "creative abstraction of research experience", the new cool. 
+
 
 
 ### About Founder
