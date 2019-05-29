@@ -91,8 +91,8 @@ profile-timeline{
  
  .timeline-content span {
     font-size: 15px;
-    color: #3399ff;
-    font-weight: 600px;
+    color: #4FC1E9;
+    font-weight: 600;
  }
  
  .timeline-content p {
@@ -175,7 +175,7 @@ profile-timeline{
 }
 
 .profile-icons ul li a i {
-    background: #3399ff;
+    background: #4FC1E9;
     color: #fff;
 	width: 40px;
 	height: 40px;
