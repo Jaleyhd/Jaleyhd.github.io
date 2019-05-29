@@ -29,6 +29,7 @@ profile-timeline{
     overflow: hidden;
  }
  
+
  .timeline-container:before {
     content: '';
     position: absolute;
@@ -101,9 +102,27 @@ profile-timeline{
     color: #888;
  }
  
- 
+ .youtube-image{
+     width: 240px;
+     height: 135px;
+ }
+
+ iframe {
+    width: 320px;
+    height: 180px;
+}
+
+
  @media screen and (max-width: 768px) {
-    .container:before {
+    .timeline-container {
+        width: 80%;
+        padding: 10px 0;
+        margin: 50px auto;
+        position: relative;
+        overflow: hidden;
+     }
+    
+    .timeline-container:before {
        left: 8px;
        width: 2px;
     }
@@ -119,7 +138,20 @@ profile-timeline{
        float: none;
        direction: ltr;
     }
- }
+
+    .youtube-image{
+        margin-top: 30px;
+        width: 160px;
+        height: 90px;
+    }
+
+    iframe {
+        width: 192px;
+        height: 108px;
+    }
+    
+
+}
  
 
 
@@ -135,6 +167,7 @@ profile-timeline{
     margin: 0px 33px;
 
 }
+
 
 .profile-icons ul li {
 	list-style-type: none;
@@ -152,3 +185,5 @@ profile-timeline{
 	margin-right: 15px;
 	padding-top: 15%;
 }
+
+
