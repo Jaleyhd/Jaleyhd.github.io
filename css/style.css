@@ -71,7 +71,7 @@ profile-timeline{
     height: 16px;
     border-radius: 50%;
     border: 2px solid #F5F7FA;
-    background: #007BFF;
+    background: #02b7e9;
     margin-top: 10px;
     z-index: 9999
  }
@@ -91,7 +91,7 @@ profile-timeline{
  
  .timeline-content span {
     font-size: 15px;
-    color: #007BFF;
+    color: #02b7e9;
     font-weight: 600;
  }
  
@@ -175,7 +175,7 @@ profile-timeline{
 }
 
 .profile-icons ul li a i {
-    background: #007BFF;
+    background: #02b7e9;
     color: #fff;
 	width: 40px;
 	height: 40px;
@@ -183,7 +183,10 @@ profile-timeline{
 	font-size: 25px;
 	text-align: center;
 	margin-right: 15px;
-	padding-top: 15%;
+    padding-top: 15%;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 5px 15px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 
