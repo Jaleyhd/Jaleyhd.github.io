@@ -71,7 +71,7 @@ profile-timeline{
     height: 16px;
     border-radius: 50%;
     border: 2px solid #F5F7FA;
-    background: #4FC1E9;
+    background: #007BFF;
     margin-top: 10px;
     z-index: 9999
  }
@@ -91,7 +91,7 @@ profile-timeline{
  
  .timeline-content span {
     font-size: 15px;
-    color: #4FC1E9;
+    color: #007BFF;
     font-weight: 600;
  }
  
@@ -175,7 +175,7 @@ profile-timeline{
 }
 
 .profile-icons ul li a i {
-    background: #4FC1E9;
+    background: #007BFF;
     color: #fff;
 	width: 40px;
 	height: 40px;
